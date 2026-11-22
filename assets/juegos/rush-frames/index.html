@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rush Frames</title>
+  <meta name="description" content="Rush Frames — platformer de speedrun minimalista." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23131317'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23ffc15e'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../demo.css">
+</head>
+<body class="demo-page rush-page">
+  <main id="app">
+
+    <!-- Pantalla: selector de nivel -->
+    <section id="screen-selector" class="screen">
+      <header class="title-block">
+        <h1><span>RUSH</span> <span class="accent">FRAMES</span></h1>
+        <p class="tagline">Corre, salta y marca tu mejor tiempo</p>
+      </header>
+
+      <nav id="level-list" class="level-list" aria-label="Selector de nivel"></nav>
+
+      <footer class="controls-hint" aria-label="Controles">
+        <span><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> moverse</span>
+        <span><kbd>Espacio</kbd> / <kbd>W</kbd> / <kbd>↑</kbd> saltar</span>
+        <span><kbd>R</kbd> reiniciar</span>
+        <span><kbd>Esc</kbd> salir</span>
+        <span><kbd>M</kbd> sonido</span>
+      </footer>
+    </section>
+
+    <!-- Pantalla: juego (todo el gameplay vive en el canvas) -->
+    <section id="screen-game" class="screen hidden">
+      <div class="canvas-wrap">
+        <canvas id="game-canvas" width="800" height="450" aria-label="Zona de juego"></canvas>
+      </div>
+      <div class="touch-controls" aria-label="Controles táctiles">
+        <button type="button" data-move="ArrowLeft" aria-label="Mover a la izquierda">◀</button>
+        <button type="button" data-move="ArrowRight" aria-label="Mover a la derecha">▶</button>
+        <button type="button" data-jump>Saltar</button>
+        <button type="button" data-selector>Niveles</button>
+      </div>
+    </section>
+
+    <!-- Pantalla: resultado de nivel -->
+    <section id="screen-result" class="screen hidden">
+      <div class="result-card">
+        <p class="result-kicker" id="result-level">Nivel</p>
+        <h2 class="result-title">¡Nivel completado!</h2>
+        <p class="result-record hidden" id="result-record">¡Nuevo récord personal!</p>
+
+        <div class="result-times">
+          <div class="time-block">
+            <span class="time-label">Tiempo</span>
+            <span class="time-value" id="result-time">00:00.000</span>
+          </div>
+          <div class="time-block">
+            <span class="time-label">Mejor tiempo</span>
+            <span class="time-value" id="result-best">—</span>
+          </div>
+        </div>
+
+        <p class="result-attempts" id="result-attempts">Intentos: 1</p>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="btn-retry" type="button">Reintentar <kbd>R</kbd></button>
+          <button class="btn" id="btn-exit" type="button">Selector <kbd>Esc</kbd></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <nav class="demo-nav" aria-label="Portfolio" lang="es"><a href="../../../index.html#rush-frames">Volver al portfolio</a></nav>
+
+  <!-- Scripts globales (sin módulos: compatible con file://) -->
+  <script src="js/constants.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

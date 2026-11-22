@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Fase 2: Remover maximum-scale=1.0 para permitir zoom (WCAG 2.1 1.4.4) -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,user-scalable=yes,viewport-fit=cover">
+<title>RICOCHET BLITZ</title>
+
+<!-- Fase 1: Content Security Policy (CWE-693)
+     Protege contra XSS y data exfiltration.
+     Nota: 'unsafe-inline' es necesario para el script inline del SDK async y estilos.
+     En producción (CrazyGames, HTTPS), este CSP es obligatorio. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  font-src 'self';
+  connect-src 'self';
+  media-src 'self' data:;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+">
+
+
+
+<!-- Descripción para SEO y sharing -->
+<meta name="description" content="Ricochet Blitz - A neon arcade ricochet game. Aim, shoot, bounce and survive endless waves of blocks.">
+<meta name="theme-color" content="#070b12">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+
+<!-- PWA Manifest (opcional, mejora experiencia standalone) -->
+<link rel="icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.json">
+
+  <link rel="stylesheet" href="../demo.css">
+</head>
+<body class="demo-page">
+<main class="play-surface ricochet-stage">
+<!-- Canvas principal con ARIA label para accesibilidad (WCAG 2.1 1.1.1) -->
+<canvas id="c" tabindex="0" role="application" aria-label="Ricochet Blitz game. Drag to aim, tap to shoot. Press P or Escape to pause, R to retry, Space or Enter to fire."></canvas>
+
+<!-- Input oculto para invocar teclado nativo móvil -->
+<input id="nameInput" type="text" maxlength="10" autocomplete="off" autocorrect="off"
+       autocapitalize="characters" spellcheck="false"
+       aria-label="Enter your name for the leaderboard">
+
+</main>
+<nav class="demo-nav" aria-label="Portfolio" lang="es"><a href="../../../index.html#inicio">Volver al portfolio</a></nav>
+
+<!-- Módulos del juego (cargados al final del body para que el DOM esté listo) -->
+<script src="js/security.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/gdpr.js"></script>
+<script src="js/crazygames-sdk.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/vibration.js"></script>
+<script src="js/difficulty.js"></script>
+<script src="js/rng.js"></script>
+<script src="js/skins.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/input.js"></script>
+<script src="js/aria.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 345 163" fill="none">
+  <defs>
+    <filter id="tinta" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency=".075 .16" numOctaves="3" seed="13" result="grano"/>
+      <feDisplacementMap in="SourceGraphic" in2="grano" scale="5.8"/>
+    </filter>
+    <linearGradient id="negro" x2=".85" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#524d4b"/><stop offset=".45" stop-color="#151413"/><stop offset="1" stop-color="#080909"/>
+    </linearGradient>
+  </defs>
+  <g transform="scale(1.12 .70)">
+  <g filter="url(#tinta)">
+    <path d="M14 211Q64 187 105 147T197 96" stroke="#26231f" stroke-width="3" stroke-linecap="round"/>
+    <path d="M62 182Q79 145 81 121M105 149Q125 109 121 77" stroke="#282420" stroke-width="2.4"/>
+    <path d="M77 156C45 143 44 115 48 97Q50 76 34 48C62 54 95 80 96 104C101 124 88 146 77 156Z" fill="url(#negro)"/>
+    <path d="M114 127C100 105 106 85 112 66C120 41 132 29 143 12C165 39 169 67 155 90C144 112 127 122 114 127Z" fill="url(#negro)"/>
+    <path d="M126 136C145 106 173 94 196 93C221 92 242 88 282 65C270 90 261 109 243 124C207 152 167 155 126 136Z" fill="#101010"/>
+    <g stroke="#f3ece0" stroke-linecap="round">
+      <path d="M78 148Q75 105 46 64M116 120Q139 82 143 27M134 135Q204 129 270 76" stroke-width="1.4" opacity=".85"/>
+      <path d="m77 134-17-22m16 7 8-22m47 3-5-21m12 6 14-16m18 56 17-17m9 11 19 1m8-12 14-15" stroke-width=".85" opacity=".55"/>
+    </g>
+  </g>
+  <path d="M14 216Q89 177 115 150M31 205C17 210 6 204 9 197C12 191 21 197 15 199" stroke="#514a41" stroke-width=".8"/>
+  <g fill="#403b33"><circle cx="28" cy="183" r="1.3"/><circle cx="22" cy="189" r=".8"/><circle cx="90" cy="71" r="1.2"/><circle cx="180" cy="76" r="1"/></g>
+  </g>
+</svg>

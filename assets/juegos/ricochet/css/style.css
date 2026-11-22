@@ -1,0 +1,94 @@
+/* Ricochet Blitz v2.0 - Refactorizado para CrazyGames
+   Estilos globales y layout responsive */
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  width:100%;height:100%;
+  background:#000;
+  display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
+  font-family:'Courier New',monospace;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+canvas{
+  display:block;
+  touch-action:none;
+  image-rendering:auto;
+}
+
+/* Ocultar el SDK container si existe */
+#cg-sdk{display:none}
+
+/* Name input hack para teclado móvil */
+#nameInput{
+  position:fixed;left:-9999px;top:0;z-index:-1;
+  font-family:'Courier New',monospace;
+  text-align:center;border:none;background:transparent;outline:none;
+  color:transparent;caret-color:transparent;-webkit-text-fill-color:transparent;
+}
+
+/* GDPR Consent Dialog */
+#gdpr-consent{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.85);
+  display:flex;justify-content:center;align-items:center;
+  font-family:'Courier New',monospace;
+}
+#gdpr-consent .gdpr-panel{
+  background:#0a0f1a;
+  border:1.5px solid #1e90ff;
+  border-radius:12px;
+  padding:24px 20px;
+  max-width:340px;
+  width:90%;
+  box-shadow:0 0 30px rgba(30,144,255,0.4);
+  color:#fff;
+}
+#gdpr-consent h2{
+  font-size:18px;font-weight:bold;
+  color:#1e90ff;
+  margin-bottom:12px;
+  text-align:center;
+  text-shadow:0 0 10px rgba(30,144,255,0.5);
+}
+#gdpr-consent p{
+  font-size:12px;line-height:1.6;
+  color:#aabbcc;
+  margin-bottom:16px;
+}
+#gdpr-consent .gdpr-buttons{
+  display:flex;flex-direction:column;gap:10px;
+}
+#gdpr-consent button{
+  font-family:'Courier New',monospace;
+  font-weight:bold;
+  font-size:13px;
+  padding:12px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+#gdpr-consent .btn-accept{
+  background:#0a3020;
+  border:1.5px solid #2ed573;
+  color:#2ed573;
+}
+#gdpr-consent .btn-accept:hover{
+  background:#103a25;
+  box-shadow:0 0 15px rgba(46,213,115,0.5);
+}
+#gdpr-consent .btn-decline{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#8899aa;
+}
+#gdpr-consent .btn-decline:hover{
+  background:rgba(255,255,255,0.1);
+}
+
+/* Reduced motion: respetar preferencia del usuario */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
+}
