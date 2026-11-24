@@ -18,7 +18,11 @@ body.demo-page {
   min-width: 0;
   min-height: 0;
 }
-.ricochet-stage { display: grid; place-items: center; }
+.ricochet-stage {
+  display: grid;
+  place-items: center;
+  overflow: clip;
+}
 .demo-nav {
   display: flex;
   align-items: stretch;

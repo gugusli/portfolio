@@ -56,25 +56,23 @@ document.querySelector('.seren-corrupt-trigger')?.addEventListener('click', () =
 });
 
 const home = document.querySelector('.home');
-if (home) {
-  rememberPlayed(home);
-  enableScrollArt(home);
-  enablePointerInk(home);
+if (home) rememberPlayed(home);
+const artRoot = home || document.querySelector('body.archivo .archive');
+if (artRoot) {
+  enableScrollArt(artRoot);
+  enablePointerInk(artRoot);
 }
 
 function rememberPlayed(root) {
   const stamps = new Map(
     [...root.querySelectorAll('[data-game]')].map(card => [
-      'played:' + card.dataset.game, card.querySelector('.played-stamp')
+      card.dataset.game, card.querySelector('.played-stamp')
     ])
   );
 
   function restorePlayed() {
-    try {
-      for (const [key, stamp] of stamps) stamp.hidden = localStorage.getItem(key) !== '1';
-    } catch {
-      // Storage can be disabled. The play links still work.
-    }
+    const played = syncSerenLog();
+    for (const [slug, stamp] of stamps) stamp.hidden = !played.includes(slug);
   }
 
   function recordPlayed(event) {
@@ -83,7 +81,7 @@ function rememberPlayed(root) {
     try {
       const key = 'played:' + link.dataset.play;
       localStorage.setItem(key, '1');
-      stamps.get(key).hidden = false;
+      restorePlayed();
     } catch {
       // Recording the stamp must never interfere with navigation.
     }
@@ -100,7 +98,7 @@ function rememberPlayed(root) {
 
 function enableScrollArt(root) {
   const timeline = root.querySelector('.tl');
-  const milestones = [...timeline.querySelectorAll('.tl-item')];
+  const milestones = timeline ? [...timeline.querySelectorAll('.tl-item')] : [];
   const links = milestones.slice(0, -1);
   const stamps = [...root.querySelectorAll('.game-stamp, .pause-stamp')];
   const entered = new WeakSet();
@@ -135,7 +133,7 @@ function enableScrollArt(root) {
 
   function syncScrollArt() {
     observer?.disconnect();
-    timeline.classList.toggle('scroll-art', Boolean(observer) && !motion.matches);
+    timeline?.classList.toggle('scroll-art', Boolean(observer) && !motion.matches);
     if (motion.matches) {
       cancelAnimationFrame(frame);
       frame = 0;
@@ -144,12 +142,14 @@ function enableScrollArt(root) {
     for (const element of [...stamps, ...milestones]) {
       if (!entered.has(element)) observer?.observe(element);
     }
-    drawBranch();
+    if (timeline) drawBranch();
   }
 
-  window.addEventListener('scroll', scheduleBranch, {passive: true});
-  window.addEventListener('resize', scheduleBranch, {passive: true});
-  document.fonts?.ready.then(scheduleBranch);
+  if (timeline) {
+    window.addEventListener('scroll', scheduleBranch, {passive: true});
+    window.addEventListener('resize', scheduleBranch, {passive: true});
+    document.fonts?.ready.then(scheduleBranch);
+  }
   motion.addEventListener('change', syncScrollArt);
   syncScrollArt();
 }

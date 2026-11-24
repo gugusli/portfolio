@@ -10,11 +10,10 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agustín Aragón">
   <meta property="og:locale" content="es_AR">
-  <!--
+  <link rel="canonical" href="https://gugusli.github.io/portfolio/archivo.html">
   <meta property="og:url" content="https://gugusli.github.io/portfolio/archivo.html">
-  <meta property="og:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image.jpg">
-  <meta name="twitter:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image.jpg">
-  -->
+  <meta property="og:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image-final.jpg">
+  <meta name="twitter:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image-final.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Agustín Aragón, desarrollador independiente de videojuegos, con una polaroid de Ricochet Blitz">
@@ -27,7 +26,7 @@
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="masthead">
   <div class="nav-inner wrap">
-    <a class="wordmark" href="index.html#inicio" aria-label="Agustín Aragón, inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
+    <a class="wordmark" href="index.html#inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
     <button type="button" class="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal" hidden><span></span><span></span></button>
     <nav id="menu-principal" class="nav-links" aria-label="Navegación principal">
       <a href="index.html#inicio">inicio</a>
@@ -38,37 +37,103 @@
     </nav>
   </div>
 </header>
-<main id="contenido" class="archive">
+<svg class="paper-filters" width="0" height="0" aria-hidden="true" focusable="false">
+  <filter id="fibra-papel" x="-5%" y="-10%" width="110%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency=".09 .14" numOctaves="3" seed="18" result="fibra"/>
+    <feDisplacementMap in="SourceGraphic" in2="fibra" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+<main id="contenido" class="archive" tabindex="-1">
   <div class="archive-head wrap">
-    <div><a class="text-link" href="index.html#proyectos">Volver a los juegos</a>
-      <h1>Archivo</h1><p>Robótica educativa, aplicaciones web y proyectos personales.</p></div>
-    <div class="archive-index"><a href="#aplicaciones">Aplicaciones</a><a href="#personales">Personales</a></div>
-    <img class="archive-lavender" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="108" height="145" loading="lazy">
+    <a class="text-link" href="index.html#proyectos">Volver a los juegos</a>
+    <div class="archive-title">
+      <h1>Archivo</h1>
+      <img class="archive-leaf" src="assets/portfolio/hojas.svg" alt="" aria-hidden="true" width="345" height="163" loading="lazy" decoding="async">
+    </div>
+    <p class="archive-deck">Robótica educativa, aplicaciones web y proyectos personales.</p>
+    <p class="sec-label archive-count">6 expedientes · 2 cajones</p>
+    <nav class="archive-index" aria-label="Cajones del archivo"><a href="#aplicaciones">Aplicaciones</a><a href="#personales">Personales</a></nav>
+    <img class="archive-lavender" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="108" height="145" loading="lazy" decoding="async">
   </div>
-  <section id="aplicaciones" class="wrap">
-    <h2 class="archive-group">Aplicaciones</h2>
-    <article class="robi">
-      <div class="robi-copy"><p class="sec-label">Robótica educativa</p><h3>Robi</h3>
-        <p>Un robot que acompaña los primeros pasos de la lectoescritura. Combina una interfaz de actividades con voz y un personaje que responde durante el ejercicio.</p></div>
-      <figure><img src="assets/portfolio/robi-robot.webp" alt="Modelo del robot educativo Robi." width="850" height="470"><figcaption>El robot</figcaption></figure>
-      <figure><img src="assets/portfolio/robi-actividad.webp" alt="Actividad de Robi: elegir cuál de las imágenes empieza con L." width="900" height="444" loading="lazy"><figcaption>Lectoescritura</figcaption></figure>
-    </article>
-    <div class="archive-projects">
-      <article><img src="assets/portfolio/cursos.webp" width="960" height="546" alt="Curso de muestra Desarrollo web desde cero." loading="lazy"><div><p class="sec-label">Educación · Laravel</p><h3>Plataforma de cursos</h3><p>Catálogo, inscripción y cursada en una misma aplicación. El recorrido del estudiante llega hasta la emisión del certificado.</p></div></article>
-      <article><img src="assets/portfolio/pedidos.webp" width="780" height="420" alt="Pedido de muestra 1042 en camino." loading="lazy"><div><p class="sec-label">Logística · PHP</p><h3>Seguimiento de pedidos</h3><p>El cliente consulta el estado de una entrega. El comercio y el repartidor actualizan el recorrido de cada pedido.</p></div></article>
-      <article><img src="assets/portfolio/lexpanel.webp" width="960" height="500" alt="Expediente de muestra Revisión de contrato de obra en LexPanel." loading="lazy"><div><p class="sec-label">Gestión jurídica · PHP</p><h3>LexPanel</h3><p>Un panel para el trabajo diario de un estudio jurídico. Cada expediente reúne el seguimiento de la causa, sus documentos y sus plazos.</p></div></article>
-      <article>
-        <img src="assets/portfolio/sentinel.svg" width="720" height="400" alt="" aria-hidden="true" loading="lazy">
-        <div><p class="sec-label">Domótica · Python</p><h3>Sentinel</h3><p>Alarma domiciliaria con panel web y aplicación Android. Un bot de Telegram envía avisos y permite consultar el estado del sistema.</p></div>
+  <section id="aplicaciones" aria-labelledby="aplicaciones-title">
+    <div class="wrap">
+      <div class="sec-label section-inscription" aria-hidden="true"><span class="seal section-seal" lang="ja">録</span><span>Aplicaciones</span></div>
+      <h2 class="sec-title archive-group" id="aplicaciones-title">Aplicaciones</h2>
+      <img class="archive-gear" src="assets/portfolio/engranaje.svg" alt="" aria-hidden="true" width="100" height="100" loading="lazy" decoding="async">
+      <article class="robi pasted">
+        <div class="robi-copy">
+          <p class="sec-label">EXP. 01 · Robótica educativa</p><h3>Robi</h3>
+          <p>Un robot que acompaña los primeros pasos de la lectoescritura. Combina una interfaz de actividades con voz y un personaje que responde durante el ejercicio.</p>
+          <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
+        </div>
+        <figure class="archive-print"><img src="assets/portfolio/robi-robot.webp" alt="Modelo del robot educativo Robi." width="850" height="470"><figcaption>El robot</figcaption></figure>
+        <figure class="archive-print"><img src="assets/portfolio/robi-actividad.webp" alt="Actividad de Robi: elegir cuál de las imágenes empieza con L." width="900" height="444" loading="lazy"><figcaption>Lectoescritura</figcaption></figure>
       </article>
+      <div class="archive-projects">
+        <article class="pasted">
+          <div>
+            <p class="sec-label">EXP. 02 · Educación · Laravel</p><h3>Plataforma de cursos</h3>
+            <p>Catálogo, inscripción y cursada en una misma aplicación. El recorrido del estudiante llega hasta la emisión del certificado.</p>
+            <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
+          </div>
+          <img class="archive-print" src="assets/portfolio/cursos.webp" width="960" height="546" alt="Curso de muestra Desarrollo web desde cero." loading="lazy">
+        </article>
+        <article class="pasted">
+          <div>
+            <p class="sec-label">EXP. 03 · Logística · PHP</p><h3>Seguimiento de pedidos</h3>
+            <p>El cliente consulta el estado de una entrega. El comercio y el repartidor actualizan el recorrido de cada pedido.</p>
+            <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
+          </div>
+          <img class="archive-print" src="assets/portfolio/pedidos.webp" width="780" height="420" alt="Pedido de muestra 1042 en camino." loading="lazy">
+        </article>
+        <article class="pasted">
+          <div>
+            <p class="sec-label">EXP. 04 · Gestión jurídica · PHP</p><h3>LexPanel</h3>
+            <p>Un panel para el trabajo diario de un estudio jurídico. Cada expediente reúne el seguimiento de la causa, sus documentos y sus plazos.</p>
+            <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
+          </div>
+          <img class="archive-print" src="assets/portfolio/lexpanel.webp" width="960" height="500" alt="Expediente de muestra Revisión de contrato de obra en LexPanel." loading="lazy">
+        </article>
+        <article class="pasted">
+          <div>
+            <p class="sec-label">EXP. 05 · Domótica · Python</p><h3>Sentinel</h3>
+            <p>Alarma domiciliaria con panel web y aplicación Android. Un bot de Telegram envía avisos y permite consultar el estado del sistema.</p>
+            <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
+          </div>
+          <img class="archive-print" src="assets/portfolio/sentinel.svg" width="720" height="400" alt="" aria-hidden="true" loading="lazy">
+        </article>
+      </div>
+      <img class="archive-lavender archive-lavender--margin" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="108" height="145" loading="lazy" decoding="async">
     </div>
   </section>
-  <section id="personales" class="wrap">
-    <h2 class="archive-group">Personales</h2>
-    <article class="seren-entry"><div><p class="sec-label">Python · En reconstrucción</p><h3>SEREN</h3></div>
-      <div><p>Agente personal de IA con interfaz web, voz y memoria persistente. Su reconstrucción avanza por fases.</p>
-      <p>Los fragmentos de SEREN que aparecen en el portfolio están escritos de antemano.</p></div></article>
-    <a class="text-link" href="index.html#proyectos">Volver a los juegos</a>
+  <section id="personales" aria-labelledby="personales-title">
+    <div class="wrap">
+      <div class="sec-label section-inscription" aria-hidden="true"><span class="seal section-seal" lang="ja">私</span><span>Personales</span></div>
+      <h2 class="sec-title archive-group" id="personales-title">Personales</h2>
+      <article class="seren-entry pasted">
+        <div class="seren-heading">
+          <div><p class="sec-label">EXP. 06 · Python · En reconstrucción</p><h3>SEREN</h3></div>
+          <span class="pc-st pause-stamp archive-stamp">EN RECONSTRUCCIÓN</span>
+        </div>
+        <div class="seren-log">
+          <div class="seren-line">&gt; SEREN — consultando</div>
+          <div class="seren-line">&gt; sujeto: aragón, d.a.</div>
+          <div class="seren-line">&gt; sesión activa</div>
+          <div class="seren-line">&gt; este archivo no contiene todo.</div>
+        </div>
+        <div class="seren-copy">
+          <p>Agente personal de IA con interfaz web, voz y memoria persistente. Su reconstrucción avanza por fases.</p>
+          <p>Los fragmentos de SEREN que aparecen en el portfolio están escritos de antemano.</p>
+        </div>
+        <div class="ghost" aria-hidden="true">
+          <span>SEREN — consultando</span>
+          <span>sujeto: aragón, d.a.</span>
+          <span>este archivo no contiene todo.</span>
+          <span>documenta el sistema antes de construirlo. siempre.</span>
+        </div>
+      </article>
+      <a class="text-link" href="index.html#proyectos">Volver a los juegos</a>
+    </div>
   </section>
 </main>
 <footer>

@@ -3,31 +3,96 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    function syncSerenLog() {
+      let played = [];
+      try {
+        played = ['ricochet', 'growstead', 'rush-frames']
+          .filter(game => localStorage.getItem('played:' + game) === '1');
+      } catch {
+        // Storage can be disabled. Keep the log in its default state.
+      }
+      document.documentElement.dataset.serenProgress = played.join(' ');
+      document.documentElement.classList.toggle('seren-finished', played.length === 3);
+      return played;
+    }
+    syncSerenLog();
+  </script>
+  <script>
+    (() => {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      try {
+        if (sessionStorage.getItem('intro-seen')) return;
+        sessionStorage.setItem('intro-seen', '1');
+      } catch { return; }
+
+      const page = document.documentElement;
+      const events = new AbortController();
+      const failsafe = setTimeout(closeIntro, 2500);
+      function closeIntro() {
+        page.classList.remove('intro-active');
+        events.abort();
+        clearTimeout(failsafe);
+      }
+
+      page.classList.add('intro-active');
+      for (const type of ['pointerdown', 'keydown', 'scroll', 'wheel', 'touchstart']) {
+        window.addEventListener(type, closeIntro, {capture: true, passive: true, signal: events.signal});
+      }
+      document.addEventListener('animationend', event => {
+        if (event.animationName === 'intro-finish') closeIntro();
+      }, {signal: events.signal});
+    })();
+  </script>
   <title>Agustín Aragón — Game Developer</title>
-  <meta name="description" content="Agustín Aragón — desarrollador independiente de videojuegos. Juegos web jugables en el navegador, hechos en JavaScript vanilla.">
+  <meta name="description" content="Portfolio de Agustín Aragón, desarrollador independiente de videojuegos. Andesol y Siren Protocol en Godot, y tres juegos para jugar en el navegador.">
   <meta property="og:title" content="Agustín Aragón — Game Developer">
-  <meta property="og:description" content="Agustín Aragón — desarrollador independiente de videojuegos. Juegos web jugables en el navegador, hechos en JavaScript vanilla.">
+  <meta property="og:description" content="Portfolio de Agustín Aragón, desarrollador independiente de videojuegos. Andesol y Siren Protocol en Godot, y tres juegos para jugar en el navegador.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agustín Aragón">
   <meta property="og:locale" content="es_AR">
-  <!--
+  <link rel="canonical" href="https://gugusli.github.io/portfolio/">
   <meta property="og:url" content="https://gugusli.github.io/portfolio/">
-  <meta property="og:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image.jpg">
-  <meta name="twitter:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image.jpg">
-  -->
+  <meta property="og:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image-final.jpg">
+  <meta name="twitter:image" content="https://gugusli.github.io/portfolio/assets/portfolio/og-image-final.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Agustín Aragón, desarrollador independiente de videojuegos, con una polaroid de Ricochet Blitz">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='3' fill='%23842f32'/%3E%3Ctext x='7' y='36' font-size='38' font-family='Georgia' fill='ivory'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="assets/tipografia/cormorant-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/tipografia/cormorant-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style-tinta.css">
   <script src="app.js" defer></script>
 </head>
 <body>
+<svg class="ink-intro" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="intro-blob" vector-effect="non-scaling-stroke" d="M199 0
+      C199 19 201 38 199 58 C196 78 197 104 185 119 C174 134 146 139 130 150
+      C113 161 102 178 85 186 C68 193 47 190 28 194 C9 198 -11 212 -30 211
+      C-49 210 -66 194 -85 186 C-104 179 -130 179 -145 167 C-160 155 -169 132 -176 113
+      C-183 94 -181 73 -185 54 C-190 36 -199 19 -203 0 C-207 -19 -213 -43 -206 -61
+      C-200 -78 -176 -89 -164 -105 C-152 -121 -148 -141 -136 -156 C-123 -172 -109 -191 -91 -199
+      C-73 -207 -49 -204 -29 -203 C-9 -202 8 -196 28 -194 C47 -192 71 -200 88 -193
+      C105 -185 114 -162 129 -149 C144 -136 169 -131 180 -116 C191 -101 194 -77 197 -58
+      C200 -38 199 -19 199 0Z"/>
+    <mask id="intro-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000">
+      <rect width="1000" height="1000" fill="#fff"/>
+      <g transform="translate(300 460)"><use class="intro-bloom" href="#intro-blob" fill="#000"/></g>
+    </mask>
+  </defs>
+  <rect width="1000" height="1000" fill="#f1ebdd" mask="url(#intro-cut)"/>
+  <path class="intro-drop" fill="#292523" d="M300 446c-2 5-8 10-8 15a8 8 0 0 0 16 0c0-5-4-11-8-15Z"/>
+  <g class="intro-contours" transform="translate(300 460)" fill="none">
+    <use class="intro-bloom" href="#intro-blob" stroke="#4a4543" stroke-width="3.5" opacity=".6"/>
+    <use class="intro-bloom" href="#intro-blob" stroke="#69406e" stroke-width="1.35" opacity=".35"/>
+  </g>
+</svg>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="masthead">
   <div class="nav-inner wrap">
-    <a class="wordmark" href="#inicio" aria-label="Agustín Aragón, inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
+    <a class="wordmark" href="#inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
     <button type="button" class="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal" hidden><span></span><span></span></button>
     <nav id="menu-principal" class="nav-links" aria-label="Navegación principal">
       <a href="#inicio">inicio</a>
@@ -48,7 +113,7 @@
     <feDisplacementMap in="SourceGraphic" in2="fibra" scale="5" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>
-<main id="contenido" class="home">
+<main id="contenido" class="home" tabindex="-1">
 <section class="hero" id="inicio" aria-labelledby="hero-title">
   <img class="ink-leaves" src="assets/portfolio/hojas.svg" width="345" height="163" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <img class="ink-leaves ink-leaves--echo" src="assets/portfolio/hojas.svg" width="345" height="163" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -57,7 +122,7 @@
     <div class="hero-intro">
       <p class="hero-kicker">Desarrollador independiente de videojuegos.</p>
       <h1 class="hero-title" id="hero-title">Agustín <em>Aragón</em></h1>
-      <p class="hero-statement">Hago juegos web que se juegan en el navegador.</p>
+      <p class="hero-statement">Desarrollo videojuegos independientes, desde experiencias web hasta mundos construidos en Godot.</p>
       <div class="hero-cta">
         <a class="btn btn-p" href="assets/juegos/ricochet/index.html" data-play="ricochet"><span class="play-triangle" aria-hidden="true"></span>jugar Ricochet Blitz</a>
         <a class="text-link" href="#proyectos">ver proyectos</a>
@@ -68,11 +133,11 @@
     <figure class="hero-work">
       <span class="print-paper" aria-hidden="true"></span>
       <img class="print-line" src="assets/portfolio/filamento.svg" alt="" aria-hidden="true" width="178" height="310" loading="lazy">
-      <a class="game-print" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-label="Jugar Ricochet Blitz">
+      <a class="game-print" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-labelledby="hero-ricochet-title hero-ricochet-play">
         <div class="print-label">
           <span class="ricochet-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          <span class="print-title">Ricochet<br><em>Blitz</em></span>
-          <span class="print-play"><span class="play-triangle" aria-hidden="true"></span> jugar</span>
+          <span class="print-title" id="hero-ricochet-title">Ricochet<br><em>Blitz</em></span>
+          <span class="print-play" id="hero-ricochet-play"><span class="play-triangle" aria-hidden="true"></span> jugar</span>
         </div>
         <img class="hero-shot" src="assets/portfolio/ricochet.webp" alt="Una partida de Ricochet Blitz, con el cañón apuntando al tablero de bloques." width="420" height="700" fetchpriority="high">
       </a>
@@ -80,11 +145,20 @@
     </figure>
     <div class="hero-stats"><div><span class="sv">3+</span><span class="sl-stat">años prog.</span></div><div><span class="sv">3</span><span class="sl-stat">juegos web</span></div></div>
     <div class="hero-footnote">
-      <div class="seren-log">
-        <div class="seren-line"><span class="sl-dim">&gt; </span><span class="sl-val">SEREN</span> — consultando</div>
-        <div class="seren-line"><span class="sl-dim">&gt; </span>sujeto: <span class="sl-val">aragón, d.a.</span></div>
-        <div class="seren-line"><span class="sl-dim">&gt; </span>sesión activa: <span class="sl-val" id="seren-timer">00:00:00</span></div>
-        <div class="seren-line"><button class="seren-corrupt-trigger" type="button">&gt; este archivo no contiene todo.</button></div>
+      <div>
+        <div class="seren-log">
+          <div class="seren-line"><span class="seren-prompt"><span class="sl-dim">&gt; </span><span class="sl-val">SEREN</span> — consultando</span></div>
+          <div class="seren-line"><span class="sl-dim">&gt; </span>sujeto: <span class="sl-val">aragón, d.a.</span></div>
+          <div class="seren-line"><span class="sl-dim">&gt; </span>sesión activa: <span class="sl-val" id="seren-timer">00:00:00</span></div>
+          <div class="seren-line"><button class="seren-corrupt-trigger" type="button">&gt; este archivo no contiene todo.</button></div>
+          <div aria-hidden="true">
+            <div class="seren-line" data-seren-played="ricochet"><span class="sl-dim">&gt; </span>sujeto probó Ricochet Blitz</div>
+            <div class="seren-line" data-seren-played="growstead"><span class="sl-dim">&gt; </span>sujeto probó Growstead</div>
+            <div class="seren-line" data-seren-played="rush-frames"><span class="sl-dim">&gt; </span>sujeto probó Rush Frames</div>
+            <div class="seren-line seren-complete"><span class="sl-dim">&gt; </span>archivo completo. gracias por jugar.</div>
+          </div>
+        </div>
+        <span class="pc-st pause-stamp complete-stamp">ARCHIVO COMPLETO</span>
       </div>
       <span class="inscription" lang="ja" aria-hidden="true">静寂の声<br>墨は語らず</span>
     </div>
@@ -100,47 +174,87 @@
         <span>documenta el sistema antes de construirlo. siempre.</span>
       </div>
     </div>
-    <article class="gas-feature pasted" id="gasolineria">
-      <figure class="station-print"><img src="assets/portfolio/gasolineria.webp" alt="Una estación de servicio durante un turno del prototipo de Godot." width="1280" height="720" loading="lazy"></figure>
-      <div class="station-copy"><span class="sec-label">Godot · Prototipo</span>
-        <h3>Gasolinería</h3><p>Un turno al frente de una estación de servicio. En la Ruta 7, cada auto que llega al surtidor cuenta para la meta de ingresos del día.</p>
-        <span class="station-note">ANDESOL · Ruta 7, km 342</span>
+    <section aria-labelledby="proyectos-activos">
+      <h3 class="sec-label" id="proyectos-activos">En desarrollo</h3>
+      <div class="active-grid">
+        <article class="active-project active-project--andesol pasted" id="gasolineria" aria-labelledby="andesol-title">
+          <header>
+            <div class="active-project-heading">
+              <h4 id="andesol-title">Andesol</h4>
+              <span class="pc-st development-stamp">EN DESARROLLO</span>
+            </div>
+            <p class="active-project-meta">Simulación y gestión 3D · <span>Godot 4.x</span></p>
+          </header>
+          <figure class="active-print">
+            <img src="assets/portfolio/andesol-estacion.webp" alt="La estación Andesol junto a la ruta, con el minimercado y un auto junto a los surtidores." width="1280" height="720" loading="lazy" decoding="async">
+          </figure>
+          <div class="active-project-details">
+            <p>Administrá una estación de servicio en la Ruta 7. Atendé vehículos, gestioná los ingresos, ampliá las instalaciones y enfrentá eventos que alteran la rutina.</p>
+            <figure class="active-print active-print--detail">
+              <a href="assets/portfolio/andesol-surtidor.webp" aria-label="Ampliar la captura del surtidor de Andesol">
+                <img src="assets/portfolio/andesol-surtidor.webp" alt="Un auto junto a un surtidor de Andesol, listo para cargar combustible." width="896" height="504" loading="lazy" decoding="async">
+              </a>
+              <figcaption>En el surtidor</figcaption>
+            </figure>
+          </div>
+        </article>
+        <article class="active-project active-project--siren pasted" id="siren-protocol" aria-labelledby="siren-protocol-title">
+          <header>
+            <div class="active-project-heading">
+              <h4 id="siren-protocol-title">Siren Protocol</h4>
+              <span class="pc-st development-stamp">EN DESARROLLO</span>
+            </div>
+            <p class="active-project-meta">Roguelite de supervivencia por oleadas · <span>Godot 4.x</span></p>
+          </header>
+          <figure class="active-print">
+            <img src="assets/portfolio/siren-combate.webp" alt="Una oleada de Derivas rodea al personaje en una arena industrial de Siren Protocol." width="1280" height="720" loading="lazy" decoding="async">
+          </figure>
+          <div class="active-project-details">
+            <div>
+              <p>Sobreviví a oleadas en una arena industrial. Las mejoras y sus sinergias cambian tu forma de combatir mientras SEREN dirige los eventos de la partida.</p>
+              <a href="assets/Siren_Protocol_GDD_v7.docx" download class="text-link active-gdd">Descargar GDD v7 <span aria-hidden="true">↓</span></a>
+            </div>
+            <figure class="active-print active-print--detail">
+              <a href="assets/portfolio/siren-codice.webp" aria-label="Ampliar la captura del Códice de Siren Protocol">
+                <img src="assets/portfolio/siren-codice.webp" alt="Entrada Artillería infernal del Códice de Siren Protocol." width="896" height="504" loading="lazy" decoding="async">
+              </a>
+              <figcaption>Códice</figcaption>
+            </figure>
+          </div>
+        </article>
       </div>
-    </article>
-    <div class="sec-label catalogue-label">juegos web</div>
-    <div class="playable-grid">
-      <article class="game-card pasted" id="ricochet-blitz" data-game="ricochet">
-        <a class="still" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-label="Jugar Ricochet Blitz"><img src="assets/portfolio/ricochet.webp" loading="lazy" alt="El tablero de bloques de una partida de Ricochet Blitz." width="420" height="700"></a>
-        <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
-        <div class="game-info"><h3>Ricochet Blitz</h3><a class="text-link" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-label="Jugar Ricochet Blitz">jugar</a></div>
-        <p>Juego de cañón y rebotes. Físicas propias, power-ups (fuego, multi-disparo, freeze, bomba), modo daily con semilla fija y leaderboard local.</p>
-      </article>
-      <article class="game-card pasted" id="growstead" data-game="growstead">
-        <a class="still" href="assets/juegos/growstead/index.html" data-play="growstead" aria-label="Jugar Growstead"><img src="assets/portfolio/growstead.webp" loading="lazy" alt="El terreno y los recursos de una partida de Growstead." width="1050" height="606"></a>
-        <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
-        <div class="game-info"><h3>Growstead</h3><a class="text-link" href="assets/juegos/growstead/index.html" data-play="growstead" aria-label="Jugar Growstead">jugar</a></div>
-        <p>Tycoon de jardín en JavaScript vanilla.</p>
-      </article>
-      <article class="game-card pasted" id="rush-frames" data-game="rush-frames">
-        <a class="still" href="assets/juegos/rush-frames/index.html" data-play="rush-frames" aria-label="Jugar Rush Frames"><img src="assets/portfolio/rush-frames.webp" loading="lazy" alt="Un nivel de Rush Frames con plataformas y obstáculos." width="800" height="452"></a>
-        <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
-        <div class="game-info"><h3>Rush Frames</h3><a class="text-link" href="assets/juegos/rush-frames/index.html" data-play="rush-frames" aria-label="Jugar Rush Frames">jugar</a></div>
-        <p>Minijuego de plataformas tipo speedrun en HTML/CSS/JS, con 10 niveles. Hecho en una jam de un día.</p>
-      </article>
-    </div>
-    <div class="pausa">
-      <div class="sec-label">en pausa</div>
-      <div class="pausa-item">
-        <span class="pausa-name">Siren Protocol <span class="pc-st pause-stamp">EN PAUSA</span></span>
-        <span class="pausa-desc">roguelite de acción en Godot 4.x — Ene 2026.</span>
-        <a href="assets/Siren_Protocol_GDD_v7.docx" download class="btn btn-s">GDD v7 ↓</a>
+    </section>
+    <section aria-labelledby="proyectos-web">
+      <h3 class="sec-label catalogue-label" id="proyectos-web">Juegos web</h3>
+      <div class="playable-grid">
+        <article class="game-card pasted" id="ricochet-blitz" data-game="ricochet">
+          <a class="still" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-label="Jugar Ricochet Blitz"><img src="assets/portfolio/ricochet.webp" loading="lazy" alt="El tablero de bloques de una partida de Ricochet Blitz." width="420" height="700"></a>
+          <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
+          <div class="game-info"><h4>Ricochet Blitz</h4><a class="text-link" href="assets/juegos/ricochet/index.html" data-play="ricochet" aria-label="Jugar Ricochet Blitz">jugar</a></div>
+          <p>Juego de cañón y rebotes. Físicas propias, power-ups (fuego, multi-disparo, freeze, bomba), modo daily con semilla fija y leaderboard local.</p>
+        </article>
+        <article class="game-card pasted" id="growstead" data-game="growstead">
+          <a class="still" href="assets/juegos/growstead/index.html" data-play="growstead" aria-label="Jugar Growstead"><img src="assets/portfolio/growstead.webp" loading="lazy" alt="Depósito de cristales en la base de Growstead, con monedas, mejoras y el objetivo de refinería visibles." width="760" height="381"></a>
+          <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
+          <div class="game-info"><h4>Growstead</h4><a class="text-link" href="assets/juegos/growstead/index.html" data-play="growstead" aria-label="Jugar Growstead">jugar</a></div>
+          <p>Tycoon de jardín en JavaScript vanilla.</p>
+        </article>
+        <article class="game-card pasted" id="rush-frames" data-game="rush-frames">
+          <a class="still" href="assets/juegos/rush-frames/index.html" data-play="rush-frames" aria-label="Jugar Rush Frames"><img src="assets/portfolio/rush-frames.webp" loading="lazy" alt="El personaje salta con una estela sobre las plataformas con pinchos de Piso espinado, con el cronómetro en marcha." width="960" height="540"></a>
+          <div class="stamp-row"><span class="pc-st game-stamp">JUGABLE</span><span class="pc-st played-stamp" hidden>JUGADO</span></div>
+          <div class="game-info"><h4>Rush Frames</h4><a class="text-link" href="assets/juegos/rush-frames/index.html" data-play="rush-frames" aria-label="Jugar Rush Frames">jugar</a></div>
+          <p>Minijuego de plataformas tipo speedrun en HTML/CSS/JS, con 10 niveles. Hecho en una jam de un día.</p>
+        </article>
       </div>
+    </section>
+    <section class="pausa" aria-labelledby="proyectos-pausa">
+      <h3 class="sec-label" id="proyectos-pausa">En pausa</h3>
       <div class="pausa-item">
         <span class="pausa-name">Ember Rite <span class="pc-st pause-stamp">EN PAUSA</span></span>
         <span class="pausa-desc">plataformero de precisión en Godot 4.6 — demo v0.1.</span>
         <a href="https://guguslu.itch.io" target="_blank" rel="noopener noreferrer" class="btn btn-s">itch.io ↗</a>
       </div>
-    </div>
+    </section>
 
     <div class="archive-entry"><div class="sec-label">otros proyectos</div><a class="text-link" href="archivo.html">Explorar el archivo</a></div>
     <div class="pgrid">
@@ -157,7 +271,7 @@
           <span class="chip">HTML</span><span class="chip">CSS</span>
           <span class="chip">JavaScript</span><span class="chip">PostgreSQL</span>
         </div>
-        <a href="https://quickreply-ia.com" target="_blank" rel="noopener noreferrer" class="btn btn-s">ver sitio →</a>
+        <a href="https://quickreply-ia.com" target="_blank" rel="noopener noreferrer" class="btn btn-s" aria-label="Ver sitio de QuickReply IA">ver sitio →</a>
       </div>
 
       <div class="pc pasted">
@@ -174,56 +288,40 @@
     </div>
   </div>
 </section>
-<section id="sobre">
+<section id="sobre" aria-labelledby="sobre-title">
   <div class="wrap">
     <div class="sec-label section-inscription"><span class="seal section-seal" lang="ja" aria-hidden="true">己</span>trasfondo</div>
-    <h2 class="sec-title">Sobre <em>mí</em></h2>
-    <div class="about-statement">
-      Desarrollo juegos en solitario desde hace dos años.
-    </div>
-
-    <div class="about-log">
-      <span class="sl-dim">&gt; </span><span class="sl-val">aragón, d.a.</span> — estado: <span class="sl-val">activo</span> · experiencia: <span class="sl-val">3+ años</span><br>
-      <span class="sl-dim">&gt; </span>documenta el sistema antes de construirlo. siempre.
-    </div>
-
-    <div class="two">
+    <h2 class="sec-title" id="sobre-title">Sobre <em>mí</em></h2>
+    <div class="two about-layout">
       <div>
-        <p class="body-p">Hago juegos web que se juegan en el navegador: <strong>Ricochet Blitz</strong>, Growstead y Rush Frames se pueden jugar acá mismo.</p>
-        <div class="fragments">
-          <div class="fragment">
-            <div class="frag-key">I</div>
-            <div class="frag-text">Un juego con arquitectura filosófica coherente retiene jugadores que uno sin ella nunca alcanza.</div>
-          </div>
-          <div class="fragment">
-            <div class="frag-key">II</div>
-            <div class="frag-text">Un GDD bien construido no describe el juego. Es el juego antes de existir en código.</div>
-          </div>
-          <div class="fragment">
-            <div class="frag-key">III</div>
-            <div class="frag-text">La complejidad que se siente proviene de capas coherentes, no de mecánicas acumuladas.</div>
-          </div>
+        <p class="about-statement">Desarrollo videojuegos en solitario desde hace un año.</p>
+        <div class="about-log">
+          <span class="sl-dim">&gt; </span><span class="sl-val">aragón, d.a.</span> — estado: <span class="sl-val">activo</span> · experiencia en programación: <span class="sl-val">3+ años</span><br>
+          <span class="sl-dim">&gt; </span>documenta el sistema antes de construirlo. siempre.
         </div>
+        <p class="body-p"><strong>Ricochet Blitz</strong>, Growstead y Rush Frames se pueden jugar acá mismo. También desarrollo Andesol y Siren Protocol en Godot.</p>
+        <ol class="fragments" type="I">
+          <li class="fragment"><p class="frag-text">Un juego con arquitectura filosófica coherente retiene jugadores que uno sin ella nunca alcanza.</p></li>
+          <li class="fragment"><p class="frag-text">Un GDD bien construido no describe el juego. Es el juego antes de existir en código.</p></li>
+          <li class="fragment"><p class="frag-text">La complejidad que se siente proviene de capas coherentes, no de mecánicas acumuladas.</p></li>
+        </ol>
       </div>
-      <div>
-        <div class="card">
-          <div class="card-head">estado actual</div>
-          <div class="card-body">
-            <div class="irow"><span class="ik">foco</span><span class="iv">juegos web</span></div>
-            <div class="irow"><span class="ik">estado</span><span class="iv"><span class="pill">activo</span></span></div>
-            <div class="irow"><span class="ik">disponibilidad</span><span class="iv">abierto a colaboraciones</span></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head">intereses</div>
-          <div class="card-body">
-            <div class="tags">
-              <span class="tag">Roguelites</span><span class="tag">Godot 4</span>
-              <span class="tag">Game Design</span><span class="tag">GDD Writing</span>
-              <span class="tag">Narrative Design</span><span class="tag">Universe Building</span>
-            </div>
-          </div>
-        </div>
+      <div class="about-files">
+        <section class="card pasted about-status" aria-labelledby="estado-title">
+          <h3 class="card-head" id="estado-title">Estado actual</h3>
+          <dl class="card-body">
+            <div class="irow"><dt>foco</dt><dd>Andesol · Siren Protocol</dd></div>
+            <div class="irow"><dt>estado</dt><dd><span class="pill">activo</span></dd></div>
+            <div class="irow"><dt>disponibilidad</dt><dd>abierto a colaboraciones</dd></div>
+          </dl>
+        </section>
+        <section class="card pasted about-interests" aria-labelledby="intereses-title">
+          <h3 class="card-head" id="intereses-title">Intereses</h3>
+          <ul class="tags file-tags">
+            <li>Roguelites</li><li>Godot 4</li><li>Game Design</li>
+            <li>GDD Writing</li><li>Narrative Design</li><li>Universe Building</li>
+          </ul>
+        </section>
         <div class="ghost" aria-hidden="true">
           <span>SEREN — consultando</span>
           <span>sujeto: aragón, d.a.</span>
@@ -234,98 +332,112 @@
     </div>
   </div>
 </section>
-<section id="trayectoria">
+<section id="trayectoria" aria-labelledby="trayectoria-title">
   <div class="wrap"><img class="sprig sprig--mobile" src="assets/portfolio/lavanda.svg" width="75" height="100" alt="" aria-hidden="true" loading="lazy" decoding="async">
     <div class="sec-label section-inscription"><span class="seal section-seal" lang="ja" aria-hidden="true">道</span>bitácora</div>
     <img class="sprig sprig--timeline" src="assets/portfolio/lavanda.svg" width="88" height="118" alt="" aria-hidden="true" loading="lazy" decoding="async">
-    <h2 class="sec-title">Mi <em>trayectoria</em></h2>
-    <div class="two">
+    <h2 class="sec-title" id="trayectoria-title">Mi <em>trayectoria</em></h2>
+    <div class="two trajectory-layout">
       <div class="tl">
         <img class="timeline-gear" src="assets/portfolio/engranaje.svg" width="34" height="34" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">2023</div><div class="tl-t">Inicio en programación general. <strong>Lógica, estructura, algoritmos.</strong> Primer contacto con el lenguaje de las máquinas.</div></div>
         <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">2024</div><div class="tl-t">Desarrollo web activo. <strong>HTML, CSS, PHP, JavaScript.</strong> Primeros proyectos que existen afuera de mi cabeza.</div></div>
         <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Dic 2025</div><div class="tl-t">Primer contacto con <strong>Godot 4.</strong> El espacio entre programar y diseñar desaparece.</div></div>
-        <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Ene 2026</div><div class="tl-t">Nace <strong>Siren Protocol.</strong> Sistemas base. El juego todavía no sabe que es un universo. <em>(Proyecto en pausa.)</em></div></div>
-        <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Feb 2026</div><div class="tl-t">La decisión. El proyecto deja de ser un juego con lore y se convierte en <strong>un universo con un juego como primer punto de entrada.</strong> <em>(Siren Protocol, en pausa.)</em></div></div>
-        <div class="tl-item"><img class="tl-sprout tl-bloom" src="assets/portfolio/flor.svg" width="44" height="44" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Hoy</div><div class="tl-t"><strong>Juegos web jugables en el navegador:</strong> Ricochet Blitz, Growstead y Rush Frames se juegan en este mismo sitio.</div></div>
+        <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Ene 2026</div><div class="tl-t">Nace <strong>AFTERSHOCK</strong>, que más tarde se llamaría <strong>Siren Protocol.</strong> Sistemas base. El juego todavía no sabe que es un universo.</div></div>
+        <div class="tl-item"><img class="tl-sprout" src="assets/portfolio/brote.svg" width="32" height="22" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Feb 2026</div><div class="tl-t">La decisión. El proyecto deja de ser un juego con lore y se convierte en <strong>un universo con un juego como primer punto de entrada.</strong></div></div>
+        <div class="tl-item"><img class="tl-sprout tl-bloom" src="assets/portfolio/flor.svg" width="44" height="44" alt="" aria-hidden="true" loading="lazy" decoding="async"><div class="tl-y">Hoy</div><div class="tl-t">Desarrollo <strong>Andesol</strong> en Godot y desde noviembre de 2026 volví a trabajar en <strong>Siren Protocol</strong>. Mis tres juegos web se pueden jugar en este mismo sitio.</div></div>
       </div>
-      <div>
-        <div class="card">
-          <div class="card-head">fortalezas</div>
-          <div class="card-body"><div class="tags">
-            <span class="tag">Documentación</span><span class="tag">Organización</span>
-            <span class="tag">Diseño de sistemas</span><span class="tag">Trabajo autónomo</span>
-            <span class="tag">Narrative design</span>
-          </div></div>
+      <div class="trajectory-files">
+        <div class="trajectory-notes">
+          <section class="card pasted" aria-labelledby="fortalezas-title">
+            <h3 class="card-head" id="fortalezas-title">Fortalezas</h3>
+            <ul class="tags file-tags">
+              <li>Documentación</li><li>Organización</li><li>Diseño de sistemas</li>
+              <li>Trabajo autónomo</li><li>Narrative design</li>
+            </ul>
+          </section>
+          <section class="card pasted learning-note" aria-labelledby="aprendizaje-title">
+            <h3 class="card-head" id="aprendizaje-title">En aprendizaje activo</h3>
+            <ul class="tags file-tags">
+              <li>Shaders</li><li>Audio design</li><li>Optimización</li><li>Build avanzado</li>
+            </ul>
+          </section>
         </div>
-        <div class="card" style="margin-top:12px">
-          <div class="card-head">en aprendizaje activo</div>
-          <div class="card-body"><div class="tags">
-            <span class="tag">Shaders</span><span class="tag">Audio design</span>
-            <span class="tag">Optimización</span><span class="tag">Build avanzado</span>
-          </div></div>
-        </div>
-        <article class="fc" id="formacion" aria-labelledby="formacion-title">
+        <article class="fc pasted" id="formacion" aria-labelledby="formacion-title">
           <div class="sec-label">educación</div>
           <h3 class="fc-heading" id="formacion-title">Formación <em>académica</em></h3>
           <div class="fc-content">
             <div>
-              <div class="fc-inst">E.E.S.T. N°5 — Berazategui</div>
-              <div class="fc-title">técnico en programación</div>
-              <ul class="fc-list">
-                <li>Último año (7° año) — egreso estimado 2026</li>
-                <li>Materias técnicas: Programación · Sistemas Operativos · Redes · Gestión de Proyectos</li>
-                <li><strong>Proyecto destacado:</strong> Sistema de Gestión de Alumnos — HTML, CSS, JS, PHP, MySQL</li>
-              </ul>
+              <h4 class="fc-title">Técnico en Programación</h4>
+              <p class="fc-inst">E.E.S.T. N°5 — Berazategui</p>
+              <p class="fc-graduation">Último año de secundaria técnica · Egreso estimado 2026</p>
             </div>
             <div class="fc-year">
               <div class="fc-n">7°</div>
               <div class="fc-l">año actual</div>
-              <div class="fc-status"><span class="pill">en curso</span></div>
+              <span class="pill">en curso</span>
             </div>
           </div>
+          <dl class="fc-details">
+            <div>
+              <dt>Materias técnicas</dt>
+              <dd>Programación · Sistemas Operativos · Redes · Gestión de Proyectos</dd>
+            </div>
+            <div>
+              <dt>Proyecto destacado</dt>
+              <dd>Sistema de Gestión de Alumnos — HTML, CSS, JS, PHP, MySQL</dd>
+            </div>
+          </dl>
         </article>
       </div>
     </div>
   </div>
 </section>
-<section id="skills">
+<section id="skills" aria-labelledby="skills-title">
   <div class="wrap">
     <div class="sec-label section-inscription"><span class="seal section-seal" lang="ja" aria-hidden="true">技</span>oficio</div>
-    <img class="sprig sprig--skills" src="assets/portfolio/lavanda.svg" width="104" height="140" alt="" aria-hidden="true" loading="lazy" decoding="async">
-    <div class="skill-heading"><h2 class="sec-title">Habilidades <em>técnicas</em></h2><img src="assets/portfolio/flor.svg" alt="" aria-hidden="true" loading="lazy" width="100" height="100"></div>
+    <div class="skill-heading">
+      <div>
+        <h2 class="sec-title" id="skills-title">Habilidades <em>técnicas</em></h2>
+        <p class="skill-scale">Niveles de autovaloración en una escala de 1 a 5.</p>
+      </div>
+      <img src="assets/portfolio/flor.svg" alt="" aria-hidden="true" loading="lazy" width="100" height="100">
+    </div>
     <div class="sk-grid">
-      <div>
-        <div class="sk-cat">core skills</div>
+      <section class="pasted skill-focus" aria-labelledby="gamedev-title">
+        <h3 class="sk-cat" id="gamedev-title">Videojuegos y diseño de sistemas</h3>
         <div class="sk-item">
-          <div class="sk-top"><span class="sk-name">GDScript / Godot 4.x</span><span class="sk-lv">Intermedio</span></div>
-          <span class="sk-blocks" role="img" aria-label="nivel: intermedio, 3 de 5"><span aria-hidden="true">●●●○○</span></span>
-          <div class="sk-note">Nodos, señales, state machines, AI directors, UI completa.</div>
+          <h4 class="sk-name">Desarrollo con Godot 4.x</h4>
+          <p class="skill-level">Intermedio <span>3/5</span></p>
+          <p class="sk-note">Arquitectura de sistemas con nodos y señales, máquinas de estados, interfaces completas y directores de IA.</p>
         </div>
         <div class="sk-item">
-          <div class="sk-top"><span class="sk-name">Game Design & GDD</span><span class="sk-lv">Intermedio-Alto</span></div>
-          <span class="sk-blocks" role="img" aria-label="nivel: intermedio-alto, 4 de 5"><span aria-hidden="true">●●●●○</span></span>
-          <div class="sk-note">GDD v7 ~2000 líneas, lore bilingüe, arquitectura filosófica.</div>
+          <h4 class="sk-name">Diseño de juegos y GDD</h4>
+          <p class="skill-level">Intermedio-Alto <span>4/5</span></p>
+          <p class="sk-note">Documentación técnica y narrativa en el GDD v7 de unas 2.000 líneas, con lore bilingüe y arquitectura filosófica.</p>
         </div>
-      </div>
-      <div>
-        <div class="sk-cat">lenguajes</div>
-        <div class="lang-list">
-          <div class="lang-row"><span class="lang-n">GDScript</span><span class="lang-l">Intermedio</span><span class="lang-dots" role="img" aria-label="nivel: intermedio, 3 de 5"><span aria-hidden="true">●●●○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">PHP</span><span class="lang-l">Intermedio-Alto</span><span class="lang-dots" role="img" aria-label="nivel: intermedio-alto, 4 de 5"><span aria-hidden="true">●●●●○</span></span></div>
-          <div class="lang-row"><span class="lang-n">JavaScript</span><span class="lang-l">Intermedio</span><span class="lang-dots" role="img" aria-label="nivel: intermedio, 3 de 5"><span aria-hidden="true">●●●○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">HTML / CSS</span><span class="lang-l">Intermedio</span><span class="lang-dots" role="img" aria-label="nivel: intermedio, 3 de 5"><span aria-hidden="true">●●●○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">Python</span><span class="lang-l">Básico-Intermedio</span><span class="lang-dots" role="img" aria-label="nivel: básico-intermedio, 2 de 5"><span aria-hidden="true">●●○○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">MySQL</span><span class="lang-l">Básico-Int.</span><span class="lang-dots" role="img" aria-label="nivel: básico-int., 2 de 5"><span aria-hidden="true">●●○○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">PostgreSQL</span><span class="lang-l">Básico-Alto</span><span class="lang-dots" role="img" aria-label="nivel: básico-alto, 2 de 5"><span aria-hidden="true">●●○○○</span></span></div>
-          <div class="lang-row"><span class="lang-n">C++ / C#</span><span class="lang-l">Básico</span><span class="lang-dots" role="img" aria-label="nivel: básico, 1 de 5"><span aria-hidden="true">●○○○○</span></span></div>
-        </div>
-        <div class="sk-cat" style="margin-top:32px">herramientas</div>
-        <div class="tool-row"><div class="tool-dot"></div>GitHub — Repositorios y versiones</div>
-        <div class="tool-row"><div class="tool-dot"></div>Trello — Gestión de tareas</div>
-        <div class="tool-row"><div class="tool-dot"></div>GDD Writing — Documentación técnica y narrativa</div>
-        <div class="tool-row"><div class="tool-dot"></div>Cursor (IA) — Asistencia en sistemas complejos</div>
-      </div>
+      </section>
+      <section class="pasted language-sheet" aria-labelledby="lenguajes-title">
+        <h3 class="sk-cat" id="lenguajes-title">Lenguajes y tecnologías</h3>
+        <dl class="lang-list">
+          <div class="lang-row lang-main"><dt>GDScript</dt><dd class="skill-level">Intermedio <span>3/5</span></dd></div>
+          <div class="lang-row"><dt>PHP</dt><dd class="skill-level">Intermedio-Alto <span>4/5</span></dd></div>
+          <div class="lang-row"><dt>JavaScript</dt><dd class="skill-level">Intermedio <span>3/5</span></dd></div>
+          <div class="lang-row"><dt>HTML / CSS</dt><dd class="skill-level">Intermedio <span>3/5</span></dd></div>
+          <div class="lang-row"><dt>Python</dt><dd class="skill-level">Básico-Intermedio <span>2/5</span></dd></div>
+          <div class="lang-row"><dt>MySQL</dt><dd class="skill-level">Básico-Int. <span>2/5</span></dd></div>
+          <div class="lang-row"><dt>PostgreSQL</dt><dd class="skill-level">Básico-Alto <span>2/5</span></dd></div>
+          <div class="lang-row"><dt>C++ / C#</dt><dd class="skill-level">Básico <span>1/5</span></dd></div>
+        </dl>
+      </section>
+      <section class="work-tools" aria-labelledby="herramientas-title">
+        <h3 class="sk-cat" id="herramientas-title">Herramientas de trabajo</h3>
+        <ul class="tool-list" role="list">
+          <li class="tool-row"><strong>GitHub</strong><span>Repositorios y versiones</span></li>
+          <li class="tool-row"><strong>Trello</strong><span>Gestión de tareas</span></li>
+          <li class="tool-row"><strong>Cursor (IA)</strong><span>Asistencia en sistemas complejos</span></li>
+        </ul>
+      </section>
     </div>
   </div>
 </section>
@@ -365,7 +477,7 @@
         <div class="c-links">
           <a href="assets/cv_agustin_aragon.pdf" target="_blank" rel="noopener" class="c-link">
             <div class="c-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M2 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div><div class="c-lbl">CV</div><div class="c-val">Ver curriculum (PDF)</div></div>
+            <div><div class="c-lbl">CV</div><div class="c-val">Ver currículum (PDF)</div></div>
           </a>
           <a href="mailto:diegoagustinaragon@gmail.com" class="c-link email-link">
             <div class="c-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 5.5l6 4 6-4" stroke="currentColor" stroke-width="1.5"/></svg></div>
