@@ -64,36 +64,71 @@ if (artRoot) {
 }
 
 function rememberPlayed(root) {
-  const stamps = new Map(
-    [...root.querySelectorAll('[data-game]')].map(card => [
-      card.dataset.game, card.querySelector('.played-stamp')
-    ])
-  );
+  const cards = [...root.querySelectorAll('[data-game]')];
+  const pendingKey = slug => 'played-stamp-pending:' + slug;
+  const observer = typeof IntersectionObserver === 'function'
+    ? new IntersectionObserver(entries => {
+        for (const {target, isIntersecting} of entries) {
+          if (isIntersecting) stampReturn(target);
+        }
+      })
+    : null;
 
-  function restorePlayed() {
+  function stampReturn(stamp) {
+    if (document.hidden) return;
+    observer?.unobserve(stamp);
+    const key = pendingKey(stamp.closest('[data-game]').dataset.game);
+    try {
+      if (localStorage.getItem(key) !== '1') return;
+      localStorage.removeItem(key);
+      if (!motion.matches) stamp.classList.add('stamp-hit');
+    } catch {
+      // Storage can be disabled.
+    }
+  }
+
+  function restorePlayed(onReturn = false) {
     const played = syncSerenLog();
-    for (const [slug, stamp] of stamps) stamp.hidden = !played.includes(slug);
+    for (const card of cards) {
+      const stamp = card.querySelector('.played-stamp');
+      stamp.hidden = !played.includes(card.dataset.game);
+      if (stamp.hidden || !onReturn || document.hidden) continue;
+      try {
+        if (localStorage.getItem(pendingKey(card.dataset.game)) !== '1') continue;
+        if (observer && !motion.matches) observer.observe(stamp);
+        else stampReturn(stamp);
+      } catch {
+        // Storage can be disabled.
+      }
+    }
   }
 
   function recordPlayed(event) {
     const link = event.target.closest('a[data-play]');
     if (!link) return;
     try {
-      const key = 'played:' + link.dataset.play;
+      const slug = link.dataset.play;
+      const key = 'played:' + slug;
+      const firstPlay = localStorage.getItem(key) !== '1';
       localStorage.setItem(key, '1');
-      restorePlayed();
+      if (firstPlay) localStorage.setItem(pendingKey(slug), '1');
     } catch {
       // Recording the stamp must never interfere with navigation.
     }
+    restorePlayed();
   }
 
   root.addEventListener('click', recordPlayed);
   root.addEventListener('auxclick', event => {
     if (event.button === 1) recordPlayed(event);
   });
-  window.addEventListener('pageshow', restorePlayed);
-  window.addEventListener('storage', restorePlayed);
-  restorePlayed();
+  window.addEventListener('pageshow', () => restorePlayed(true));
+  window.addEventListener('storage', () => restorePlayed());
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) observer?.disconnect();
+    else restorePlayed(true);
+  });
+  restorePlayed(true);
 }
 
 function enableScrollArt(root) {
@@ -178,7 +213,7 @@ function startPointerInk(root, ghosts) {
   root.before(canvas);
 
   const events = new AbortController();
-  const lifetime = 900;
+  const lifetime = 450;
   const ink = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
   const dropTarget = '.hero-cta a, .text-link';
   const readingArea = [

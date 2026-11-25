@@ -29,11 +29,10 @@
     <a class="wordmark" href="index.html#inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
     <button type="button" class="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal" hidden><span></span><span></span></button>
     <nav id="menu-principal" class="nav-links" aria-label="Navegación principal">
-      <a href="index.html#inicio">inicio</a>
-      <a href="index.html#proyectos">proyectos</a>
-      <a href="#aplicaciones">aplicaciones</a>
-      <a href="#personales">personales</a>
-      <a href="index.html#contacto">contacto</a>
+      <a href="index.html#proyectos">Proyectos</a>
+      <a href="archivo.html" aria-current="page">Archivo</a>
+      <a href="index.html#sobre">Sobre mí</a>
+      <a href="index.html#contacto">Contacto</a>
     </nav>
   </div>
 </header>
@@ -51,7 +50,7 @@
       <img class="archive-leaf" src="assets/portfolio/hojas.svg" alt="" aria-hidden="true" width="345" height="163" loading="lazy" decoding="async">
     </div>
     <p class="archive-deck">Robótica educativa, aplicaciones web y proyectos personales.</p>
-    <p class="sec-label archive-count">6 expedientes · 2 cajones</p>
+    <p class="sec-label archive-count">7 expedientes · 2 cajones</p>
     <nav class="archive-index" aria-label="Cajones del archivo"><a href="#aplicaciones">Aplicaciones</a><a href="#personales">Personales</a></nav>
     <img class="archive-lavender" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="108" height="145" loading="lazy" decoding="async">
   </div>
@@ -83,6 +82,15 @@
           <div>
             <p class="sec-label">EXP. 03 · Logística · PHP</p><h3>Seguimiento de pedidos</h3>
             <p>El cliente consulta el estado de una entrega. El comercio y el repartidor actualizan el recorrido de cada pedido.</p>
+            <details class="project-walkthrough">
+              <summary>Ver recorrido de ejemplo</summary>
+              <p>Pedido de muestra n.º 1042</p>
+              <ol>
+                <li>El comercio registra el pedido y lo asigna a un repartidor.</li>
+                <li>El cliente abre el seguimiento y ve que el pedido está en camino.</li>
+                <li>El repartidor confirma la entrega y el estado cambia a entregado.</li>
+              </ol>
+            </details>
             <div><a class="text-link" href="https://seguimiento-pedidos-ih68.onrender.com/" target="_blank" rel="noopener noreferrer">Ver Seguimiento de pedidos <span aria-hidden="true">↗</span></a></div>
             <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
           </div>
@@ -92,6 +100,15 @@
           <div>
             <p class="sec-label">EXP. 04 · Gestión jurídica · PHP</p><h3>LexPanel</h3>
             <p>Un panel para el trabajo diario de un estudio jurídico. Cada expediente reúne el seguimiento de la causa, sus documentos y sus plazos.</p>
+            <details class="project-walkthrough">
+              <summary>Ver recorrido de ejemplo</summary>
+              <p>Expediente de muestra «Revisión de contrato de obra»</p>
+              <ol>
+                <li>El estudio crea el expediente y lo vincula a un cliente.</li>
+                <li>Carga un movimiento del expediente y agenda la fecha límite para responder.</li>
+                <li>Adjunta el contrato para consultarlo desde el expediente.</li>
+              </ol>
+            </details>
             <div><a class="text-link" href="https://lexpanel.onrender.com/" target="_blank" rel="noopener noreferrer">Ver LexPanel <span aria-hidden="true">↗</span></a></div>
             <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
           </div>
@@ -104,7 +121,12 @@
             <div><a class="text-link" href="https://sentinel-3s47.onrender.com/" target="_blank" rel="noopener noreferrer">Ver panel de Sentinel <span aria-hidden="true">↗</span></a></div>
             <span class="pc-st pause-stamp archive-stamp">ESCOLAR</span>
           </div>
-          <img class="archive-print" src="assets/portfolio/sentinel.svg" width="720" height="400" alt="" aria-hidden="true" loading="lazy">
+          <figure class="archive-print">
+            <a href="assets/portfolio/sentinel-dashboard.webp" aria-label="Ampliar la captura del historial de Sentinel">
+              <img src="assets/portfolio/sentinel-dashboard.webp" width="1280" height="720" alt="Panel de Sentinel con los filtros de zona y fecha y un movimiento simulado en el garaje." loading="lazy" decoding="async">
+            </a>
+            <figcaption>Historial de eventos con una detección de ejemplo</figcaption>
+          </figure>
         </article>
       </div>
       <img class="archive-lavender archive-lavender--margin" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="108" height="145" loading="lazy" decoding="async">
@@ -136,6 +158,25 @@
           <span>documenta el sistema antes de construirlo. siempre.</span>
         </div>
       </article>
+      <div class="archive-projects">
+        <article class="pasted">
+          <div>
+            <h3>QuickReply IA</h3>
+            <p>Plataforma freemium de generación de respuestas con IA.</p>
+            <div class="chips">
+              <span class="chip">HTML</span><span class="chip">CSS</span>
+              <span class="chip">JavaScript</span><span class="chip">PostgreSQL</span>
+            </div>
+            <div><a class="text-link" href="https://quickreply-ia.com" target="_blank" rel="noopener noreferrer">Ver QuickReply IA <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <figure class="archive-print">
+            <a href="assets/portfolio/quickreply-respuestas.webp" aria-label="Ampliar el ejemplo de respuestas de QuickReply IA">
+              <img src="assets/portfolio/quickreply-respuestas.webp" alt="Tres borradores de QuickReply IA para reprogramar una reunión, con tonos directo, empático y estratégico." width="804" height="401" loading="lazy" decoding="async">
+            </a>
+            <figcaption>Ejemplo ilustrativo de las variantes de respuesta</figcaption>
+          </figure>
+        </article>
+      </div>
       <a class="text-link" href="index.html#proyectos">Volver a los juegos</a>
     </div>
   </section>

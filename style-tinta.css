@@ -401,7 +401,7 @@ main > section:not(.hero) {
   font-size: clamp(40px, 4.4vw, 65px);
   margin: 12px 0;
 }
-.catalogue-label,
+.development-projects,
 .archive-entry,
 .pausa {
   margin-top: 40px;
@@ -1249,6 +1249,10 @@ footer > .wrap {
   margin-bottom: 7px;
 }
 
+.language-sheet .skill-scale {
+  margin-bottom: 8px;
+}
+
 .skill-scale,
 .skill-level {
   color: var(--muted);
@@ -1456,8 +1460,17 @@ footer > .wrap {
   background: #f9f3f5;
 }
 
-.active-print img {
+.active-print img,
+.active-print video {
+  display: block;
   width: 100%;
+  height: auto;
+}
+
+.active-print > video + figcaption {
+  padding: 5px 3px 1px;
+  color: var(--muted);
+  font-size: .82rem;
 }
 
 .active-project-details {
@@ -1468,6 +1481,23 @@ footer > .wrap {
   margin-top: 13px;
   font-size: .94rem;
   line-height: 1.5;
+}
+
+.project-facts {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+
+.project-facts dt {
+  color: var(--v);
+  font: 600 .74rem/1.45 var(--mono);
+}
+
+.project-facts dd {
+  margin: 2px 0 0;
 }
 
 .active-print--detail {
@@ -1557,7 +1587,8 @@ footer > .wrap {
 }
 
 .game-stamp,
-.pause-stamp {
+.pause-stamp,
+.played-stamp {
   position: relative;
 }
 
@@ -1747,7 +1778,11 @@ footer > .wrap {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.robi figcaption {
+.archive-print > a {
+  display: block;
+}
+
+.archive-print figcaption {
   padding: 6px 2px 2px;
   color: var(--muted);
   font: .79rem/1.4 var(--mono);
@@ -1757,6 +1792,10 @@ footer > .wrap {
   display: grid;
   gap: clamp(26px, 4vw, 52px);
   margin-top: clamp(26px, 4vw, 52px);
+}
+
+#personales .archive-projects {
+  margin-bottom: clamp(24px, 4vw, 44px);
 }
 
 .archive-projects article {
@@ -1785,6 +1824,32 @@ footer > .wrap {
   right: 9%;
   left: auto;
   transform: rotate(4deg);
+}
+
+.project-walkthrough {
+  margin: 12px 0;
+  padding-block: 7px;
+  border-block: 1px solid var(--line);
+}
+
+.project-walkthrough summary {
+  padding-block: 3px;
+  color: var(--v);
+  cursor: pointer;
+}
+
+.project-walkthrough p {
+  margin: 8px 0 4px;
+  font-weight: 600;
+}
+
+.project-walkthrough ol {
+  margin: 0 0 4px;
+  padding-inline-start: 1.35em;
+}
+
+.project-walkthrough li + li {
+  margin-top: 4px;
 }
 
 .archive-print {
@@ -2285,7 +2350,7 @@ footer .ft-meta {
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: .5;
+  opacity: .34;
   pointer-events: none;
 }
 
@@ -2337,7 +2402,7 @@ footer .ft-meta {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    animation: intro-finish 990ms steps(1, end) both;
+    animation: intro-finish 720ms steps(1, end) both;
   }
 
   .intro-active .intro-drop {
@@ -2346,15 +2411,15 @@ footer .ft-meta {
 
   .intro-active .intro-bloom {
     transform-origin: 0 0;
-    animation: intro-bloom 900ms cubic-bezier(.215, .61, .355, 1) 90ms both;
+    animation: intro-bloom 630ms cubic-bezier(.215, .61, .355, 1) 90ms both;
   }
 
   .intro-active .intro-contours {
-    animation: intro-contours 900ms linear 90ms both;
+    animation: intro-contours 630ms linear 90ms both;
   }
 
   .intro-active .seren-prompt {
-    animation: intro-type 400ms steps(21, end) 330ms both;
+    animation: intro-type 330ms steps(21, end) 250ms both;
   }
 }
 
