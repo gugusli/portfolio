@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andesol — Agustín Aragón</title>
+  <meta name="description" content="Andesol. Simulación y gestión 3D en Godot 4.x. Gestioná una estación de servicio argentina que cambia a lo largo del turno.">
+  <meta property="og:title" content="Andesol — Agustín Aragón">
+  <meta property="og:description" content="Andesol. Simulación y gestión 3D en Godot 4.x. Gestioná una estación de servicio argentina que cambia a lo largo del turno.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agustín Aragón">
+  <meta property="og:locale" content="es_AR">
+  <link rel="canonical" href="https://gugusli.github.io/portfolio/andesol.html">
+  <meta property="og:url" content="https://gugusli.github.io/portfolio/andesol.html">
+  <meta property="og:image" content="https://gugusli.github.io/portfolio/assets/portfolio/andesol-estacion.webp?v=db539a76">
+  <meta name="twitter:image" content="https://gugusli.github.io/portfolio/assets/portfolio/andesol-estacion.webp?v=db539a76">
+  <meta property="og:image:width" content="960">
+  <meta property="og:image:height" content="540">
+  <meta property="og:image:alt" content="La estación Andesol y su marquesina, vista desde la playa.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='3' fill='%23842f32'/%3E%3Ctext x='7' y='36' font-size='38' font-family='Georgia' fill='ivory'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style-tinta.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="archivo">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="masthead">
+  <div class="nav-inner wrap">
+    <a class="wordmark" href="index.html#inicio"><span class="seal" lang="ja" aria-hidden="true">静</span>Agustín Aragón</a>
+    <button type="button" class="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal" hidden><span></span><span></span></button>
+    <nav id="menu-principal" class="nav-links" aria-label="Navegación principal">
+      <a href="index.html#proyectos">Proyectos</a>
+      <a href="archivo.html">Archivo</a>
+      <a href="index.html#sobre">Sobre mí</a>
+      <a href="index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<svg class="paper-filters" width="0" height="0" aria-hidden="true" focusable="false">
+  <filter id="fibra-papel" x="-5%" y="-10%" width="110%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency=".09 .14" numOctaves="3" seed="18" result="fibra"/>
+    <feDisplacementMap in="SourceGraphic" in2="fibra" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+<main id="contenido" class="archive game-details-page game-details-page--andesol" tabindex="-1">
+  <div class="archive-head wrap">
+    <a class="text-link" href="index.html#gasolineria">Volver a Proyectos</a>
+    <div class="detail-cover">
+      <div class="archive-title"><h1>Andesol</h1></div>
+      <div class="detail-meta">
+        <p class="active-project-meta">Simulación y gestión 3D en Godot 4.x</p>
+        <span class="pc-st detail-status">En desarrollo</span>
+      </div>
+      <p class="archive-deck">Gestioná una estación de servicio argentina que cambia a lo largo del turno.</p>
+      <img class="archive-leaf" src="assets/portfolio/hojas.svg" alt="" aria-hidden="true" width="345" height="163" decoding="async">
+      <img class="detail-cover-art" src="assets/portfolio/lavanda.svg" alt="" aria-hidden="true" width="75" height="100" decoding="async">
+    </div>
+    <nav class="archive-index" aria-label="Secciones de Andesol">
+      <a href="#jugabilidad">Jugabilidad</a>
+      <a href="#sistemas">Sistemas</a>
+      <a href="#ambientacion">Ambientación</a>
+    </nav>
+  </div>
+
+  <section id="jugabilidad" aria-labelledby="jugabilidad-title">
+    <div class="wrap">
+      <h2 id="jugabilidad-title" class="detail-section-title">Un turno en la Ruta 7</h2>
+      <div class="game-detail-grid">
+        <figure class="active-print detail-mount detail-mount--video">
+          <video controls preload="none" playsinline poster="assets/portfolio/andesol-estacion.webp?v=db539a76" width="960" height="540" aria-label="Partida de Andesol">
+            <source src="assets/portfolio/andesol-jugabilidad.mp4?v=4eb104c4" type="video/mp4">
+            <a href="assets/portfolio/andesol-jugabilidad.mp4?v=4eb104c4">Ver el video de Andesol</a>
+          </video>
+          <figcaption>El primer servicio del turno, desde la llegada del auto hasta el cobro.</figcaption>
+        </figure>
+        <div class="game-detail-copy detail-steps">
+          <p>La jornada empieza con un solo surtidor y una meta de facturación. El primer turno te guía por los dos trabajos de la estación.</p>
+          <ol>
+            <li>Atendé los autos en la playa y cobrá en la caja del minimercado. Los clientes pueden irse si esperan demasiado.</li>
+            <li>Comprobá los ingresos y gastos en el ticket de cierre. Si alcanzás la meta, avanzás al siguiente día, con más demanda y clientes menos pacientes.</li>
+            <li>Usá el saldo en el panel de la oficina para habilitar más surtidores. Cada compra aumenta la capacidad de la playa y queda registrada como gasto.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sistemas" aria-labelledby="sistemas-title">
+    <div class="wrap game-detail-grid">
+      <div class="game-detail-copy detail-record">
+        <h2 id="sistemas-title">Tránsito, cobros y cierre</h2>
+        <p>Los vehículos siguen rutas de entrada y salida para los surtidores habilitados. Las llegadas se espacian según la fase del turno y se frenan si la entrada está ocupada. Al cerrar deja de entrar gente y queda un margen para terminar las operaciones pendientes.</p>
+        <p>La caja y los surtidores comparten el mismo registro de ventas. El sistema distingue la facturación de los gastos, de modo que ampliar la playa reduce el saldo disponible sin bajar lo facturado en el día.</p>
+        <p>Los incidentes tienen condiciones propias y un gestor se encarga de que ocurran de a uno. Si se avería el generador, por ejemplo, la reparación aparece en el ticket del turno.</p>
+      </div>
+      <figure class="archive-print detail-mount detail-mount--station">
+        <a href="assets/portfolio/andesol-surtidor.webp?v=f147fa97" aria-label="Ampliar la captura del surtidor de Andesol">
+          <img src="assets/portfolio/andesol-surtidor.webp?v=f147fa97" alt="Un auto junto al surtidor y el aviso en pantalla para cargar combustible." width="960" height="540" loading="lazy" decoding="async">
+        </a>
+        <figcaption>El aviso de interacción muestra qué podés hacer en el surtidor.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="ambientacion" aria-labelledby="ambientacion-title">
+    <div class="wrap game-detail-grid">
+      <div class="game-detail-copy">
+        <h2 id="ambientacion-title">De la tarde a la noche</h2>
+        <p>La iluminación sigue el reloj de la jornada. El cielo pasa por el ocaso, se encienden las luces de la marquesina y los carteles, y aparecen las estrellas. Al entrar al minimercado, el sonido ambiente cambia de forma gradual.</p>
+        <p>El exterior incluye la señalización del estacionamiento y un puesto de aire y agua. Junto con el frente vidriado del local y las luces de la playa, ayudan a distinguir las zonas de trabajo a medida que oscurece.</p>
+      </div>
+      <figure class="archive-print detail-mount detail-mount--night">
+        <a href="assets/portfolio/andesol-noche.webp" aria-label="Ampliar la vista nocturna de Andesol">
+          <img src="assets/portfolio/andesol-noche.webp" alt="La marquesina y la entrada del minimercado iluminan la playa al cierre del turno." width="960" height="540" loading="lazy" decoding="async">
+        </a>
+        <figcaption>La estación al cierre, con la marquesina encendida y el cielo nocturno.</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="footer-art" aria-hidden="true">
+    <img class="footer-emblem" src="assets/portfolio/emblema.svg" width="176" height="176" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <img class="footer-bloom" src="assets/portfolio/flor.svg" width="360" height="360" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  </div>
+  <div class="wrap">
+    <div class="ft">
+      <div class="ft-left">
+        <span class="ft-logo">Agustín Aragón</span>
+        <span class="seal" lang="ja" aria-hidden="true">静</span>
+        <span class="ft-jp" lang="ja">静寂の声</span>
+      </div>
+      <div class="ft-meta">
+        Portfolio diseñado y desarrollado por Agustín Aragón<br>
+        desarrollador indie de videojuegos
+      </div>
+    </div>
+    <div class="ft-seren">
+      <span class="sl-dim">&gt;</span> archivo cerrado. aragón, d.a. · sistema: activo
+    </div>
+  </div>
+</footer>
+</body>
+</html>

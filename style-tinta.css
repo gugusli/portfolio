@@ -249,26 +249,49 @@ button:focus-visible {
 .hero-work {
   position: relative;
   padding: 10px;
-  background: #fffaf0;
-  border: 1px solid #cec3af;
-  box-shadow: 0 9px 23px #30221d20;
+  border: 1px solid transparent;
   transform: rotate(1deg);
   isolation: isolate;
 }
+.hero-work::before,
+.hero-work::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.hero-work::before {
+  inset: -1px;
+  z-index: -1;
+  border: 1px solid #bfae95;
+  background: var(--paper-grain), linear-gradient(156deg, #fffcf2 52%, #f5ead7);
+  box-shadow: inset 0 0 0 1px #fff9ec, 1px 2px 2px #4b362e31, 5px 8px 13px #4b362e30;
+}
+.hero-work::after {
+  z-index: 2;
+  top: -6px;
+  right: 10%;
+  width: clamp(54px, 18%, 96px);
+  height: 19px;
+  transform: rotate(6deg);
+  background: var(--paper-grain), linear-gradient(176deg, #dbc49dc9, #c09a67bd);
+  box-shadow: inset 0 1px #fff7de9e, inset 0 -1px #96755263;
+  clip-path: polygon(1% 4%, 99% 0, 97% 24%, 100% 54%, 98% 70%, 100% 100%, 0 97%, 3% 63%, 0 31%);
+}
 .print-paper {
   position: absolute;
-  inset: 0;
-  background: #d9cdbc;
-  border: 1px solid #bcb19d;
-  transform: rotate(-4deg);
-  z-index: -2;
+  inset: 4px 5px -5px -5px;
+  background: var(--paper-grain), linear-gradient(155deg, #e4d9c7, #d4c3ab);
+  border: 1px solid #b9a990;
+  box-shadow: 0 2px 2px #50382229, 4px 9px 16px #50382222;
+  transform: rotate(-3.6deg);
+  z-index: -3;
 }
 .print-line {
   position: absolute;
   width: 28%;
   right: -10%;
   bottom: -6%;
-  z-index: -1;
+  z-index: -2;
 }
 .game-print {
   display: grid;
@@ -276,6 +299,7 @@ button:focus-visible {
   padding: 16px;
   align-items: center;
   background: radial-gradient(ellipse at 20% 80%, #443849, #21242b 80%);
+  box-shadow: inset 0 1px 3px #16121c9e, 0 0 0 1px #796b60;
   color: #fff7de;
   text-decoration: none;
   position: relative;
@@ -321,7 +345,6 @@ button:focus-visible {
 }
 .hero-work figcaption {
   position: relative;
-  background: #fffaf0;
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -557,14 +580,17 @@ main > section:not(.hero) {
   padding-left: 1.25em;
 }
 .skill-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  display: flow-root;
 }
-.skill-heading img {
-  width: 100px;
-  flex: none;
+.skill-flower {
+  position: absolute;
+  z-index: -1;
+  inset-block-start: -40px;
+  inset-inline-start: calc(50% - clamp(86px, 10vw, 148px));
+  width: clamp(56px, 5.55vw, 80px);
+  pointer-events: none;
+  user-select: none;
+  rotate: -12deg;
 }
 .pub-list li {
   margin-block: 8px;
@@ -779,8 +805,13 @@ main > section:not(.hero) {
   .ft-left {
     flex-direction: row;
   }
-  .skill-heading img {
-    width: 90px;
+  .skill-heading {
+    padding-inline-end: clamp(64px, 13vw + 14px, 84px);
+  }
+  .skill-flower {
+    inset-block-start: -33px;
+    inset-inline: auto 38px;
+    width: 58px;
   }
   .btn {
     padding: 10px 12px;
@@ -1061,6 +1092,16 @@ footer > .wrap {
   padding-top: 8px;
 }
 
+.about-status {
+  background: #faf4e7 var(--paper-grain);
+  box-shadow: 0 1px 2px #4734262c, 3px 6px 11px #47342620;
+}
+
+.about-status::after {
+  background: var(--paper-grain), linear-gradient(176deg, #d3b77a9e, #c4a26780);
+  box-shadow: inset 0 1px #fff9e494, inset 0 -1px #987a4f4d;
+}
+
 .card-body,
 .file-tags,
 .fc-details,
@@ -1108,6 +1149,10 @@ footer > .wrap {
 .card.learning-note,
 .sk-grid > .skill-focus {
   background: #f1e9e9 var(--paper-grain);
+}
+
+.about-interests {
+  box-shadow: inset 0 -1px #c8b9bd, 1px 2px 4px #4734261c;
 }
 
 .about-interests::after,
@@ -1260,6 +1305,8 @@ footer > .wrap {
 }
 
 .sk-grid {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 21px;
@@ -1400,18 +1447,29 @@ footer > .wrap {
 }
 
 .active-project.pasted {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
   align-self: stretch;
   margin-top: 0;
   padding: clamp(13px, 2vw, 24px);
+  box-shadow: 0 1px 2px var(--project-shadow), 3px 7px 12px var(--project-shadow);
+}
+
+.active-project.pasted:focus-within {
+  --tilt: 0deg;
+  box-shadow: 0 2px 4px var(--project-shadow), 4px 9px 15px var(--project-shadow);
 }
 
 .active-project--andesol {
   --tilt: -.55deg;
+  --project-shadow: #5d442b2d;
+  background: var(--paper-grain), linear-gradient(140deg, #fbf6e9 56%, #f3e8d4);
 }
 
 .active-project--siren.pasted {
   --tilt: .55deg;
-  background: #f3edf0;
+  --project-shadow: #44313f2e;
+  background: var(--paper-grain), linear-gradient(155deg, #f5eff1 52%, #eae0e6);
 }
 
 .active-project-heading {
@@ -1426,6 +1484,10 @@ footer > .wrap {
   margin: 0;
   font: 500 clamp(34px, 3.8vw, 53px)/.97 var(--serif);
   letter-spacing: -.035em;
+}
+
+.active-project .development-stamp {
+  mix-blend-mode: multiply;
 }
 
 .development-stamp {
@@ -1467,26 +1529,47 @@ footer > .wrap {
   height: auto;
 }
 
+.active-print--feature {
+  padding: 6px;
+  box-shadow: inset 0 -2px #59423316, 0 2px 3px var(--project-shadow);
+}
+
+.active-print--feature video {
+  aspect-ratio: 16 / 9;
+  outline: 1px solid var(--project-shadow);
+}
+
+.active-print--feature video:focus-visible {
+  outline: 3px solid #8c464d;
+  outline-offset: 2px;
+}
+
 .active-print > video + figcaption {
   padding: 5px 3px 1px;
   color: var(--muted);
   font-size: .82rem;
 }
 
+.active-print--feature > video + figcaption {
+  padding: 7px 3px 2px;
+}
+
 .active-project-details {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(90px, 31%);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 37%);
   align-items: start;
-  gap: clamp(10px, 1.6vw, 20px);
-  margin-top: 13px;
+  align-content: start;
+  gap: 10px clamp(10px, 1.6vw, 20px);
+  margin-top: 16px;
   font-size: .94rem;
   line-height: 1.5;
 }
 
 .project-facts {
+  grid-column: 1 / -1;
   display: grid;
   gap: 8px;
-  margin: 12px 0 0;
+  margin: 0;
   padding-top: 9px;
   border-top: 1px solid var(--line);
 }
@@ -1502,11 +1585,13 @@ footer > .wrap {
 
 .active-print--detail {
   padding: 4px;
-  rotate: 2deg;
+  rotate: 1.6deg;
+  box-shadow: 1px 2px 3px var(--project-shadow);
 }
 
 .active-project--siren .active-print--detail {
-  rotate: -2deg;
+  rotate: -1.2deg;
+  background: #f3eaee;
 }
 
 .active-print--detail a {
@@ -1514,15 +1599,23 @@ footer > .wrap {
 }
 
 .active-print--detail figcaption {
-  padding-top: 2px;
+  padding: 4px 2px 2px;
   text-align: center;
   color: var(--muted);
   font: italic 600 .96rem/1.1 var(--serif);
 }
 
-.active-gdd {
-  display: inline-block;
-  margin-top: 7px;
+.active-project--andesol .active-print--detail img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: 44% center;
+}
+
+.active-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 14px;
 }
 
 @media (701px <= width <= 960px), (max-width: 375px) {
@@ -1545,15 +1638,40 @@ footer > .wrap {
 }
 
 .game-card {
+  --mount-paper: #fffaf0;
+  --photo-tilt: -.7deg;
+  --photo-shadow: #46363238;
+  background: #faf4e7 var(--paper-grain);
+  box-shadow: 0 1px 2px #47342630, 2px 5px 10px #4734261e;
   padding: 12px 13px 16px;
 }
 
-.game-card:nth-child(2) {
+#growstead {
+  --mount-paper: #f0ebdc;
+  --photo-tilt: .45deg;
+  --photo-shadow: #4b533134;
   padding-bottom: 21px;
 }
 
-.game-card:nth-child(3) {
+#rush-frames {
+  --mount-paper: #faf0ec;
+  --photo-tilt: -.35deg;
+  --photo-shadow: #55344a32;
   padding-inline: 16px;
+}
+
+.game-card .still {
+  rotate: var(--photo-tilt);
+  background: var(--mount-paper) var(--paper-grain);
+  box-shadow: 0 1px 1px var(--photo-shadow), 1px 3px 5px var(--photo-shadow);
+}
+
+#ricochet-blitz .still {
+  padding-bottom: 9px;
+}
+
+#rush-frames .still {
+  padding: 5px;
 }
 
 .game-info {
@@ -1594,6 +1712,18 @@ footer > .wrap {
 
 .game-stamp {
   rotate: -4deg;
+}
+
+#growstead .game-stamp {
+  rotate: 2deg;
+}
+
+#rush-frames .game-stamp {
+  rotate: -2deg;
+}
+
+.game-card .game-stamp {
+  mix-blend-mode: multiply;
 }
 
 .played-stamp {
@@ -1794,6 +1924,406 @@ footer > .wrap {
   margin-top: clamp(26px, 4vw, 52px);
 }
 
+/* Expedientes de videojuegos. Los soportes y las copias comparten el mismo papel. */
+.game-details-page {
+  --cover-light: #fbf5e8;
+  --cover-shade: #e9dbc1;
+  --mount-paper: #fffaf0;
+  --detail-edge: #c4b293;
+  --detail-shadow: #523b2830;
+  --detail-rule: #ad895e;
+  --detail-tape: #c3a271a6;
+}
+
+.game-details-page--siren {
+  --cover-light: #f8efee;
+  --cover-shade: #e4d5df;
+  --mount-paper: #fbf4f4;
+  --detail-edge: #c2aebd;
+  --detail-shadow: #472f412e;
+  --detail-rule: #9e8197;
+  --detail-tape: #a28ba9a8;
+}
+
+.archive.game-details-page h1 {
+  font-size: clamp(3rem, 7.8vw, 7.1rem);
+  text-wrap: balance;
+}
+
+.game-details-page .archive-head {
+  padding-block: clamp(23px, 3.1vw, 44px) 24px;
+}
+
+.detail-cover {
+  position: relative;
+  isolation: isolate;
+  margin-top: 13px;
+  padding: clamp(15px, 1.9vw, 26px) clamp(16px, 3.7vw, 52px);
+  background: var(--paper-grain), linear-gradient(140deg, var(--cover-light) 42%, var(--cover-shade));
+  border: 1px solid var(--detail-edge);
+  box-shadow: inset 0 1px #fff8ea, 1px 2px 2px var(--detail-shadow), 3px 5px 9px var(--detail-shadow);
+}
+
+.detail-cover::after {
+  position: absolute;
+  inset: 8px auto 8px 6px;
+  border-inline-start: 1px solid var(--detail-edge);
+  content: "";
+  pointer-events: none;
+}
+
+.detail-cover .archive-title {
+  margin: 0;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-block: 13px 10px;
+}
+
+.detail-meta .active-project-meta {
+  margin: 0;
+}
+
+.detail-status {
+  background: transparent;
+  rotate: -2.5deg;
+}
+
+.detail-cover :is(.archive-leaf, .detail-cover-art) {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.detail-cover .archive-leaf {
+  right: 8%;
+  bottom: 32%;
+  width: min(18%, 182px);
+  opacity: .74;
+}
+
+.detail-cover-art {
+  right: 9%;
+  bottom: 35%;
+  width: min(8%, 84px);
+  rotate: 19deg;
+}
+
+.game-details-page--siren .detail-cover .archive-leaf {
+  right: 6%;
+  bottom: 28%;
+  width: min(13%, 145px);
+  rotate: -9deg;
+}
+
+.game-details-page--siren .detail-cover-art {
+  right: 11%;
+  bottom: 41%;
+  width: min(8%, 88px);
+  rotate: -13deg;
+  opacity: .64;
+  mix-blend-mode: multiply;
+}
+
+.game-details-page .archive-index {
+  margin-block: 14px -12px;
+}
+
+.game-details-page--siren .archive-index a {
+  --tab: #e1d2e1;
+}
+
+.game-details-page--siren .archive-index a:nth-child(even) {
+  --tab: #ebdbbb;
+}
+
+main.game-details-page > section {
+  padding-block: clamp(37px, 5.1vw, 73px);
+}
+
+main.game-details-page > #jugabilidad {
+  padding-block-start: clamp(35px, 4.2vw, 60px);
+}
+
+.game-details-page--andesol > #jugabilidad {
+  --sheet: #f1e8d5;
+}
+
+.game-details-page--andesol > #sistemas {
+  --sheet: #f7f0e4;
+}
+
+.game-details-page--andesol > #ambientacion {
+  --sheet: #eae0d3;
+}
+
+.game-details-page--siren > #jugabilidad {
+  --sheet: #eee5e8;
+}
+
+.game-details-page--siren > #sistemas {
+  --sheet: #f6efec;
+}
+
+.game-details-page--siren > #progresion {
+  --sheet: #ede3e7;
+}
+
+.game-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.58fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(20px, 4vw, 52px);
+}
+
+.game-detail-copy {
+  max-width: 62ch;
+}
+
+.game-detail-copy h2,
+.detail-section-title {
+  margin-bottom: 15px;
+  font-size: clamp(1.9rem, 3.8vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.detail-section-title {
+  margin-bottom: clamp(20px, 2.3vw, 33px);
+}
+
+.game-detail-copy p + p,
+.game-detail-copy ol {
+  margin-top: 12px;
+}
+
+.detail-steps {
+  padding-inline-start: clamp(12px, 2vw, 24px);
+  border-inline-start: 1px solid var(--detail-rule);
+}
+
+.detail-steps ol {
+  margin-bottom: 0;
+  padding-inline-start: 1.55em;
+}
+
+.detail-steps li {
+  padding-inline-start: .3em;
+}
+
+.detail-steps li + li {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+
+.detail-steps li::marker {
+  color: var(--red);
+  font: 600 .82rem var(--mono);
+}
+
+.detail-record {
+  border-inline-start: 1px solid var(--detail-rule);
+  padding-inline-start: clamp(12px, 2vw, 24px);
+}
+
+.game-details-page .detail-mount {
+  position: relative;
+  align-self: start;
+  background: var(--mount-paper) var(--paper-grain);
+  border: 1px solid var(--detail-edge);
+  padding: 6px;
+  rotate: none;
+}
+
+.detail-mount :is(video, img) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detail-mount video {
+  aspect-ratio: 16 / 9;
+}
+
+.detail-mount video:focus-visible {
+  outline: 3px solid #8c464d;
+  outline-offset: 2px;
+}
+
+.game-details-page .detail-mount figcaption {
+  padding: 8px 5px 4px;
+  color: var(--muted);
+  font: .79rem/1.45 var(--mono);
+}
+
+.game-details-page .detail-mount--video {
+  padding: clamp(5px, .7vw, 10px);
+  box-shadow: inset 0 -2px #57413419, 1px 2px 2px var(--detail-shadow), 4px 7px 11px var(--detail-shadow);
+}
+
+.detail-mount--video::before,
+.detail-mount--station::before {
+  position: absolute;
+  z-index: 1;
+  inset: -7px 8% auto auto;
+  width: clamp(51px, 16%, 94px);
+  height: 17px;
+  rotate: 4deg;
+  background: var(--paper-grain), linear-gradient(175deg, #fff9e934, var(--detail-tape)), var(--detail-tape);
+  box-shadow: inset 0 1px #fffae78c;
+  clip-path: polygon(0 5%, 100% 0, 97% 28%, 100% 54%, 98% 77%, 100% 100%, 0 97%, 2% 66%, 0 38%);
+  content: "";
+  pointer-events: none;
+}
+
+.game-details-page--siren .detail-mount--video::before {
+  right: auto;
+  left: 10%;
+  rotate: -5deg;
+}
+
+.game-details-page .detail-mount--station {
+  box-shadow: 1px 2px 2px var(--detail-shadow), 2px 4px 6px var(--detail-shadow);
+}
+
+.detail-mount--station::before {
+  width: 58px;
+  height: 14px;
+  rotate: -2deg;
+}
+
+.game-details-page .detail-mount--night {
+  padding: clamp(6px, 1.05vw, 15px);
+  background: #f1e9df var(--paper-grain);
+  box-shadow: inset 0 -2px #9a86742b, 2px 2px 3px var(--detail-shadow), 5px 8px 12px var(--detail-shadow);
+}
+
+.game-details-page .detail-mount--codex {
+  padding: clamp(7px, 1vw, 14px);
+  box-shadow: 1px 2px 2px var(--detail-shadow), 3px 4px 7px var(--detail-shadow);
+}
+
+.detail-mount--codex figcaption {
+  margin-top: 7px;
+  border-top: 1px solid var(--detail-edge);
+}
+
+.detail-notes {
+  display: grid;
+  gap: clamp(19px, 4vw, 50px);
+  align-items: center;
+  padding: clamp(17px, 3vw, 44px);
+  background: var(--paper-grain), linear-gradient(145deg, #fbf4ee 54%, #f0e4e7);
+  border: 1px solid var(--detail-edge);
+  box-shadow: inset 0 -2px #7254621f, 1px 3px 6px var(--detail-shadow);
+}
+
+.detail-attachment {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 17px 14px 13px;
+  color: var(--v);
+  border: 1px solid var(--detail-edge);
+  border-inline-start: 3px double var(--detail-rule);
+  background: #eadde4 var(--paper-grain);
+  box-shadow: 1px 2px 2px var(--detail-shadow);
+  text-wrap: balance;
+}
+
+.detail-attachment::after {
+  position: absolute;
+  inset: -1px -1px auto auto;
+  width: 13px;
+  height: 13px;
+  background: linear-gradient(45deg, #c5adbd 48%, #f5eaed 51%);
+  border-bottom: 1px solid #b89eaf;
+  border-left: 1px solid #b89eaf;
+  content: "";
+  pointer-events: none;
+}
+
+@media (min-width: 801px) {
+  .game-details-page--andesol #sistemas .game-detail-grid {
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
+  }
+
+  .game-details-page--andesol #ambientacion .game-detail-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.52fr);
+    align-items: center;
+  }
+
+  .game-details-page .detail-mount--station {
+    margin-top: 22px;
+    rotate: 1.1deg;
+  }
+
+  .game-details-page .detail-mount--night {
+    rotate: -.55deg;
+  }
+
+  .game-details-page .detail-mount--codex {
+    rotate: -.8deg;
+  }
+
+  .detail-notes {
+    grid-template-columns: minmax(0, 1fr) minmax(215px, 32%);
+  }
+}
+
+@media (max-width: 800px) {
+  .game-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .game-details-page .detail-mount--video {
+    padding: 5px;
+  }
+
+  .detail-cover :is(.archive-leaf, .detail-cover-art) {
+    opacity: .24;
+  }
+}
+
+@media (max-width: 700px) {
+  .detail-cover :is(.archive-leaf, .detail-cover-art) {
+    display: none;
+  }
+
+  .game-details-page--andesol .detail-cover .archive-leaf {
+    display: block;
+    inset: 22px 15px auto auto;
+    width: 49px;
+    opacity: .72;
+  }
+
+  .game-details-page--siren .detail-cover-art {
+    display: block;
+    inset: auto 12px 10px auto;
+    width: 45px;
+    opacity: .14;
+  }
+
+  .game-details-page .archive-index {
+    gap: 6px;
+  }
+
+  .game-details-page .archive-index a {
+    padding: 9px 8px 11px;
+    font-size: .75rem;
+  }
+}
+
 #personales .archive-projects {
   margin-bottom: clamp(24px, 4vw, 44px);
 }
@@ -1968,7 +2498,11 @@ footer > .wrap {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: radial-gradient(ellipse at 84% 31%, #e4d7c9 0, transparent 55%);
+  background: var(--paper-grain),
+    linear-gradient(180deg, #5f422910, transparent 20px calc(100% - 36px), #6d50351a),
+    radial-gradient(ellipse at 40% 23%, #fff9ed, transparent 55%),
+    radial-gradient(ellipse at 83% 33%, #e3d4c6, transparent 62%),
+    var(--bg);
 }
 
 .hero-bloom,
@@ -1999,6 +2533,7 @@ footer > .wrap {
   left: 47%;
   transform: rotate(11deg);
   mix-blend-mode: multiply;
+  filter: drop-shadow(1px 2px 1px #4a311840);
 }
 
 .hero-work {
@@ -2038,28 +2573,122 @@ footer > .wrap {
   transform: rotate(-13deg);
 }
 
+.home > #proyectos {
+  padding-block-end: clamp(33px, 4.2vw, 60px);
+}
+
+.home #proyectos .archive-entry {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0 clamp(14px, 3vw, 38px);
+  margin-bottom: 0;
+}
+
+.home > #contacto,
+.home-footer {
+  --sheet: #f1eade;
+}
+
+.home > #contacto {
+  padding-block: clamp(37px, 5vw, 72px) clamp(11px, 1.15vw, 16px);
+}
+
+.home #contacto .ct-grid {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(24px, 6vw, 90px);
+}
+
+.home #contacto .ct-title {
+  margin: 0 0 16px;
+  font-size: clamp(3.5rem, 6.2vw, 5.65rem);
+  letter-spacing: -.035em;
+  line-height: .9;
+}
+
+.home #contacto .ct-title em {
+  color: var(--v);
+}
+
+.home #contacto .ct-invitation {
+  font-size: clamp(25px, 3vw, 40px);
+}
+
+.home #contacto .ct-desc {
+  max-width: 51ch;
+}
+
+.home #contacto .c-links {
+  max-width: 32rem;
+}
+
+.home #contacto .c-link:hover .c-val {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-aside {
+  width: min(100%, 420px);
+  min-width: 0;
+  padding-top: clamp(14px, 2.5vw, 36px);
+}
+
+.home #contacto .cta-box {
+  z-index: 1;
+  border-color: #baaa92;
+  background: var(--paper-grain), linear-gradient(154deg, #fffaf0 61%, #f0e3d0);
+  box-shadow: 1px 2px 2px #57443424, 3px 4px 7px #5744341b;
+  rotate: -.85deg;
+}
+
+.home #contacto .cta-box::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: -6px 9% auto auto;
+  width: 54px;
+  height: 16px;
+  background: var(--paper-grain), linear-gradient(165deg, #9c5149cf, #843935c9);
+  rotate: 5deg;
+  box-shadow: inset 0 1px #f6d5b97d;
+  clip-path: polygon(0 5%, 100% 0, 97% 34%, 100% 67%, 97% 100%, 0 96%, 3% 54%);
+}
+
+.home #contacto .ct-seren {
+  margin-top: clamp(18px, 2vw, 29px);
+}
+
 .contact-art {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  column-gap: 15px;
-  min-height: 192px;
-  margin-top: 22px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  margin-top: clamp(10px, 1.1vw, 16px);
+  padding-inline: 5px clamp(26px, 3vw, 43px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.contact-art .ghost {
+  max-width: 22ch;
+  font-size: clamp(17px, 1.55vw, 24px);
 }
 
 .contact-art .sprig--contact {
-  right: 0;
-  bottom: 7px;
-  width: 82px;
-  transform: rotate(12deg);
+  top: -28px;
+  right: -17px;
+  width: clamp(47px, 4.7vw, 66px);
+  transform: rotate(19deg);
 }
 
 .contact-emblem {
   position: relative;
-  justify-self: center;
-  width: min(100%, 226px);
-  opacity: .10;
+  grid-column: 2;
+  width: clamp(106px, 10.1vw, 146px);
+  opacity: .43;
+  rotate: -5deg;
+  mix-blend-mode: multiply;
 }
 
 .timeline-gear {
@@ -2125,6 +2754,31 @@ footer .ft-meta {
   background: var(--sheet);
 }
 
+.home-footer {
+  padding: 0 0 clamp(64px, 7.1vw, 102px);
+}
+
+.home-footer::before {
+  display: none;
+}
+
+.home-footer .ft {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: clamp(25px, 4.4vw, 64px);
+  max-width: min(85%, 820px);
+}
+
+.home-footer .ft-seren {
+  margin-top: 13px;
+}
+
+.home-footer .footer-bloom {
+  right: -34px;
+  bottom: -112px;
+  width: 257px;
+}
+
 @media (min-width: 701px) {
   .hero-title {
     margin-block: 20px 16px;
@@ -2187,9 +2841,13 @@ footer .ft-meta {
   }
 
   .pasted,
-  .hero-work,
-  .print-paper {
+  .hero-work {
     transform: none;
+  }
+
+  .print-paper {
+    inset: 2px 3px -4px -3px;
+    transform: rotate(-1.75deg);
   }
 
   .pasted:is(:hover, :focus-within) {
@@ -2236,28 +2894,58 @@ footer .ft-meta {
     width: 29px;
   }
 
-  .contact-art {
-    grid-template-columns: 1fr;
-    min-height: 145px;
-    margin-top: 16px;
-  }
-
-  .contact-emblem {
-    width: 158px;
-  }
-
-  .contact-art .sprig--contact {
-    display: block;
-    width: 66px;
-  }
-
   .pausa-name .pc-st {
     display: table;
     margin: 2px 0 4px;
   }
 
-  #contacto .ct-title {
-    margin-top: 18px;
+  .home #contacto .ct-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 25px;
+  }
+
+  .home #contacto .ct-title {
+    font-size: clamp(2.95rem, 10.4vw, 4rem);
+  }
+
+  .contact-aside {
+    padding-top: 0;
+  }
+
+  .home #contacto .cta-box {
+    rotate: none;
+  }
+
+  .contact-art {
+    margin-top: 10px;
+    padding-inline: 0 58px;
+  }
+
+  .contact-art .sprig--contact {
+    display: block;
+    top: -17px;
+    right: 4px;
+    width: 46px;
+  }
+
+  .contact-emblem {
+    width: 94px;
+  }
+
+  .home-footer {
+    padding-bottom: 83px;
+  }
+
+  .home-footer .ft {
+    display: flex;
+    gap: 7px;
+    max-width: 100%;
+  }
+
+  .home-footer .footer-bloom {
+    right: -21px;
+    bottom: -57px;
+    width: 155px;
   }
 
   footer {
@@ -2284,8 +2972,28 @@ footer .ft-meta {
 }
 
 @media (max-width: 375px) {
+  .hero-gear {
+    top: calc(41% - clamp(0px, 100vw - 320px, 44px));
+    right: 2%;
+    width: 76px;
+    opacity: .56;
+  }
+
+  .hero-stats {
+    margin-left: 35%;
+    gap: 18px;
+  }
+
+  .print-title {
+    font-size: clamp(30px, 9.5vw, 36px);
+  }
+
   .ink-leaves {
     width: 12.5%;
+  }
+
+  .active-project-details {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 33%);
   }
 }
 
@@ -2341,6 +3049,10 @@ footer .ft-meta {
 
   .timeline-gear {
     rotate: none;
+  }
+
+  .ink-trail {
+    display: none;
   }
 }
 
